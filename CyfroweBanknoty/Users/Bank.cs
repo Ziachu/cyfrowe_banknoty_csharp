@@ -11,21 +11,15 @@ namespace CyfroweBanknoty.Users
         // ------
         // PART I
         // ------
-
         // step 4. Bank picks one banknote and demands disclosure of the rest
-
         // step 6. Bank verifies 99 banknotes
-
         // step 7. Bank signs picked banknote
-
         // step 8. Bank sends signed banknote over to Alice
 
         // --------
         // PART III
         // --------
-
         // step 15. Bank verifies signature under banknote
-
         // step 16. Bank verifies if banknote was not used before
     }
 }

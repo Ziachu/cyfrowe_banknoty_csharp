@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyfroweBanknoty", "CyfroweBanknoty\CyfroweBanknoty.csproj", "{730606B7-03D3-4755-8E23-AD0F9A80AC71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyfroweBanknoty.Tests", "CyfroweBanknoty.Tests\CyfroweBanknoty.Tests.csproj", "{AC6D5A62-DB06-4209-A144-6C298DC589B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyfroweBanknoty.Tests", "CyfroweBanknot.Tests\CyfroweBanknoty.Tests.csproj", "{079B453B-E87E-4823-9FDC-B7109BE7E95E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{730606B7-03D3-4755-8E23-AD0F9A80AC71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{730606B7-03D3-4755-8E23-AD0F9A80AC71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{730606B7-03D3-4755-8E23-AD0F9A80AC71}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AC6D5A62-DB06-4209-A144-6C298DC589B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC6D5A62-DB06-4209-A144-6C298DC589B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC6D5A62-DB06-4209-A144-6C298DC589B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC6D5A62-DB06-4209-A144-6C298DC589B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{079B453B-E87E-4823-9FDC-B7109BE7E95E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{079B453B-E87E-4823-9FDC-B7109BE7E95E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{079B453B-E87E-4823-9FDC-B7109BE7E95E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{079B453B-E87E-4823-9FDC-B7109BE7E95E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{730606B7-03D3-4755-8E23-AD0F9A80AC71}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CyfroweBanknoty</RootNamespace>
     <AssemblyName>CyfroweBanknoty</AssemblyName>
@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,7 +53,6 @@
     <Compile Include="Tools\Transmitter.cs" />
     <Compile Include="Users\Alice.cs" />
     <Compile Include="Users\Bank.cs" />
-    <Compile Include="Users\Bob.cs" />
     <Compile Include="Users\Vendor.cs" />
   </ItemGroup>
   <ItemGroup>

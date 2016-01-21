@@ -1,1 +1,6 @@
-C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\bin\Debug\CyfroweBanknoty.exe.config
+C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\bin\Debug\CyfroweBanknoty.dll.config
+C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\bin\Debug\CyfroweBanknoty.dll
+C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\bin\Debug\CyfroweBanknoty.pdb
+C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.dll
+C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.pdb
+C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.csprojResolveAssemblyReference.cache
