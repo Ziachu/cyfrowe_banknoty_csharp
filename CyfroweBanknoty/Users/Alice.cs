@@ -87,7 +87,7 @@ namespace CyfroweBanknoty.Users
             for (int i = 0; i < no_banknotes; i++)
             {
                 Console.Write('.');
-                banknotes.Add(new Banknote(amount, ids[i], 100));
+                banknotes.Add(new Banknote(amount, ids[i], s_series, t_series, u_hashes, w_hashes));
             }
 
             Console.WriteLine("");

@@ -12,40 +12,30 @@ namespace CyfroweBanknoty.Objects
         public double amount;
         public int id;
 
-        public Series[] s_series;
-        public Series[] u_series;
-        public Series[] t_series;
-        public Series[] w_series;
+        public List<Series> s_series;
+        public List<Series> t_series;
+        public List<byte[]> u_hashes;
+        public List<byte[]> w_hashes;
 
         public bool hidden = false;
 
-        public Banknote(double amount, int id, Series[] s_series, Series[] u_series, Series[] t_series, Series[] w_series)
+        public Banknote(double amount, int id, List<Series> s_series, List<Series> t_series, List<byte[]> u_hashes, List<byte[]> w_hashes)
         {
             this.amount = amount;
             this.id = id;
             this.s_series = s_series;
-            this.u_series = u_series;
             this.t_series = t_series;
-            this.w_series = w_series;
+            this.u_hashes = u_hashes;
+            this.w_hashes = w_hashes;
         }
 
-        public Banknote(double amount, int id, int no_id_series)
+        public void VisualizeBanknote()
         {
-            this.amount = amount;
-            this.id = id;
-
-            s_series = new Series[no_id_series];
-            u_series = new Series[no_id_series];
-            t_series = new Series[no_id_series];
-            w_series = new Series[no_id_series];
-
-            for (int i = 0; i < no_id_series; i++)
-            {
-                s_series[i] = new Series(100);
-                u_series[i] = new Series(100);
-                t_series[i] = new Series(100);
-                w_series[i] = new Series(100);
-            }
+            Console.WriteLine("\n------------------ banknote ------------------");
+            Console.WriteLine("--- amount: {0}", amount);
+            Console.WriteLine("--- id: {0} ---", id);
+            Console.WriteLine("--- contains {0} (4 x {1}) series, each of length: {2} ---", t_series.Count() * 4, t_series.Count(), t_series[0].length);
+            Console.WriteLine(hidden ? "--- is hidden ---" : "--- is not hidden ---");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CyfroweBanknoty.Tools;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,9 +23,11 @@ namespace CyfroweBanknoty.Users
         // step 15. Bank verifies signature under banknote
         // step 16. Bank verifies if banknote was not used before
 
+        private RSA rsa;
+
         public Bank()
         {
-
+            rsa = new RSA();
         }
     }
 }

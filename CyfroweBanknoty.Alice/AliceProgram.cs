@@ -23,7 +23,7 @@ namespace CyfroweBanknoty.AliceProgram
             // --- --- hiding unique identifiers behind "l_secret" and "r_secret" series
             // --- --- 
             alice.GenerateBanknotes(123.45, 10);
-
+            alice.banknotes[0].VisualizeBanknote();
             // --- printing Alice ids
 
             //Console.WriteLine("[info] Alice ids:");
