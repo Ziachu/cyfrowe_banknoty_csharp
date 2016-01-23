@@ -1,4 +1,3 @@
-C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknot.Tests\obj\Debug\CyfroweBanknoty.Tests.csprojResolveAssemblyReference.cache
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknot.Tests\bin\Debug\CyfroweBanknot.Tests.dll
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknot.Tests\bin\Debug\CyfroweBanknot.Tests.pdb
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknot.Tests\bin\Debug\Autofac.dll
@@ -12,5 +11,6 @@ C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknot.Tests\bin\Debug\Autofac.x
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknot.Tests\bin\Debug\Autofac.Extras.FakeItEasy.xml
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknot.Tests\bin\Debug\FakeItEasy.xml
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknot.Tests\bin\Debug\nunit.framework.xml
+C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknot.Tests\obj\Debug\CyfroweBanknoty.Tests.csprojResolveAssemblyReference.cache
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknot.Tests\obj\Debug\CyfroweBanknot.Tests.dll
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknot.Tests\obj\Debug\CyfroweBanknot.Tests.pdb

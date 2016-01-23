@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CyfroweBanknoty.Users
 {
-    class Bank
+    public class Bank
     {
         // ------
         // PART I

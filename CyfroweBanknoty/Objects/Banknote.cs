@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CyfroweBanknoty.Objects
 {
-    class Banknote
+    public class Banknote
     {
         // implement banknote object
-        public float amount;
+        public double amount;
         public int id;
 
         public Series[] s_series;
@@ -19,7 +19,7 @@ namespace CyfroweBanknoty.Objects
 
         public bool hidden = false;
 
-        public Banknote(float amount, int id, Series[] s_series, Series[] u_series, Series[] t_series, Series[] w_series)
+        public Banknote(double amount, int id, Series[] s_series, Series[] u_series, Series[] t_series, Series[] w_series)
         {
             this.amount = amount;
             this.id = id;
@@ -29,17 +29,17 @@ namespace CyfroweBanknoty.Objects
             this.w_series = w_series;
         }
 
-        public Banknote(float amount, int id, int length)
+        public Banknote(double amount, int id, int no_id_series)
         {
             this.amount = amount;
             this.id = id;
 
-            s_series = new Series[length];
-            u_series = new Series[length];
-            t_series = new Series[length];
-            w_series = new Series[length];
+            s_series = new Series[no_id_series];
+            u_series = new Series[no_id_series];
+            t_series = new Series[no_id_series];
+            w_series = new Series[no_id_series];
 
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < no_id_series; i++)
             {
                 s_series[i] = new Series(100);
                 u_series[i] = new Series(100);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CyfroweBanknoty.Objects
 {
-    class Series
+    public class Series
     {
         // implement series object (part of banknote object)
         public int length;
@@ -22,13 +22,26 @@ namespace CyfroweBanknoty.Objects
         public Series(int length)
         {
             this.length = length;
-            values = GenerateRandomValues(length);
+            values = new byte[length];
+            GenerateRandomValues(length);
         }
 
-        private byte[] GenerateRandomValues(int length)
+        private void GenerateRandomValues(int length)
         {
-            // implement!
-            throw new NotImplementedException();
+            Random random = new Random();
+            random.NextBytes(values);
+        }
+
+        public override string ToString()
+        {
+            //string representation;
+
+            //foreach (byte b in values)
+            //{
+            //    representation += 
+            //}
+
+            return BitConverter.ToString(values);
         }
     }
 }

@@ -14,8 +14,10 @@ namespace CyfroweBanknoty.Tests
         [SetUp]
         public void SetUp()
         {
+            _sut = new Transmitter();
+
             Socket socket = A.Fake<Socket>();
-            _sut = new Transmitter(socket);
+            _sut.AddReceiver("Bob", socket);
         }
 
         [Test]
@@ -23,7 +25,7 @@ namespace CyfroweBanknoty.Tests
         {
             string str = "Hello world!";
 
-            var result = _sut.sendObject(str);
+            var result = _sut.sendObject(str, "Bob");
 
             Assert.That(result, Is.True);
         }
