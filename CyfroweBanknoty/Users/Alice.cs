@@ -17,7 +17,7 @@ namespace CyfroweBanknoty.Users
         // ------
         // PART I
         // ------
-        // step 1. Alice prepares 100 banknotes:
+        // step 1. Alice prepares 100 banknotes                         ✓
         // step 2. Alice hides created banknotes
         // step 3. Alice sends hidden banknotes over to Bank
         // [jump to Bank.cs][step 4.]

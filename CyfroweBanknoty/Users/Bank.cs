@@ -21,5 +21,10 @@ namespace CyfroweBanknoty.Users
         // --------
         // step 15. Bank verifies signature under banknote
         // step 16. Bank verifies if banknote was not used before
+
+        public Bank()
+        {
+
+        }
     }
 }
