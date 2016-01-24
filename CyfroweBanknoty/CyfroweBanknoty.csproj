@@ -49,6 +49,7 @@
     <Compile Include="Objects\Banknote.cs" />
     <Compile Include="Objects\Series.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\Connection.cs" />
     <Compile Include="Tools\Helper.cs" />
     <Compile Include="Tools\RSA.cs" />
     <Compile Include="Tools\Transmitter.cs" />
