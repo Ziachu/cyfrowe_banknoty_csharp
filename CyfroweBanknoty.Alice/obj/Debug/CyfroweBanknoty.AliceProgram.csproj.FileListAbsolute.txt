@@ -6,3 +6,5 @@ C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\bin\Debug\CyfroweB
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\bin\Debug\CyfroweBanknoty.pdb
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\obj\Debug\CyfroweBanknoty.Alice.exe
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\obj\Debug\CyfroweBanknoty.Alice.pdb
+C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\bin\Debug\BouncyCastle.Crypto.pdb

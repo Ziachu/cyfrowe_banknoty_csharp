@@ -60,6 +60,8 @@ namespace CyfroweBanknoty.Users
         private Socket vendor_socket;
         public Transmitter transmitter;
 
+        public Tools.RSA rsa;
+
         public Alice()
         {
             banknotes = new List<Banknote>();
@@ -67,6 +69,8 @@ namespace CyfroweBanknoty.Users
             l_secret = new List<Series>();
             r_secret = new List<Series>();
             transmitter = new Transmitter();
+
+            rsa = new Tools.RSA();
 
             GenerateAliceIdentifiers(5, 10, "alice_ids.txt");
         }
@@ -95,7 +99,8 @@ namespace CyfroweBanknoty.Users
 
         public void EstablishConnectionWithBank()
         {
-            bank_socket = new Socket(;
+            //bank_socket = new Socket();
+            //rsa.blindObject(null, null, "00");
         }
 
         private void CommitSchemes()

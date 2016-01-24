@@ -40,6 +40,8 @@ namespace CyfroweBanknoty.AliceProgram
             //    Console.WriteLine(s);
             //}
 
+            alice.EstablishConnectionWithBank();
+
             Console.ReadLine();
         }
     }
