@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyfroweBanknoty", "CyfroweB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyfroweBanknoty.AliceProgram", "CyfroweBanknoty.Alice\CyfroweBanknoty.AliceProgram.csproj", "{93371B77-F230-4C7F-A2CE-C69626625ADC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyfroweBanknoty.Bank", "CyfroweBanknoty.Bank\CyfroweBanknoty.Bank.csproj", "{E161FF5F-FD87-46E1-94C8-7BB13E51FC03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyfroweBanknoty.BankProgram", "CyfroweBanknoty.Bank\CyfroweBanknoty.BankProgram.csproj", "{E161FF5F-FD87-46E1-94C8-7BB13E51FC03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

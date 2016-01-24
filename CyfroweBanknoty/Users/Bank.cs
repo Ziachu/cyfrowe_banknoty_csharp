@@ -26,9 +26,23 @@ namespace CyfroweBanknoty.Users
 
         private RSA rsa;
 
+        private Connection alice_connection;
+
         public Bank()
         {
             rsa = new RSA();
+        }
+
+        public void EstablishConnectionWithAlice()
+        {
+            alice_connection = new Connection();
+            alice_connection.socket.Bind(alice_connection.ipEndPoint);
+
+            Console.WriteLine("[info]: Waiting for connection...");
+            alice_connection.socket.Listen(1);
+
+            alice_connection.handler = alice_connection.socket.Accept();
+            Console.WriteLine("[info]: Connection accepted.");
         }
 
         public void XORSecrets(List<Series> r_secret, List<Series> l_secret)

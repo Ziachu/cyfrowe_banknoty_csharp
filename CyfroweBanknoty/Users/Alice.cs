@@ -56,8 +56,8 @@ namespace CyfroweBanknoty.Users
         public string unique_identifiers_file;
         public List<Series> alice_ids;
 
-        private Socket bank_socket;
-        private Socket vendor_socket;
+        private Connection bank_connection;
+        private Connection vendor_connection;
         public Transmitter transmitter;
 
         public Tools.RSA rsa;
@@ -99,8 +99,17 @@ namespace CyfroweBanknoty.Users
 
         public void EstablishConnectionWithBank()
         {
-            //bank_socket = new Socket();
-            //rsa.blindObject(null, null, "00");
+            bank_connection = new Connection();
+
+            try
+            {
+                bank_connection.socket.Connect(bank_connection.ipEndPoint);
+                Console.WriteLine("[info]: Connection accepted.");
+            }
+            catch (SocketException e)
+            {
+                Console.WriteLine("[fail]: Something went wrong!\n" + e.Message);
+            }
         }
 
         private void CommitSchemes()
