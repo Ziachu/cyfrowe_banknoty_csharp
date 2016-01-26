@@ -26,6 +26,7 @@ namespace CyfroweBanknoty.Users
 
         private RSA rsa;
 
+
         private Connection alice_connection;
 
         public Bank()
@@ -83,5 +84,72 @@ namespace CyfroweBanknoty.Users
                 Console.WriteLine("Secrets cannot be XORed (because of different lengths).");
             }
         }
+            
+        public void pickOneBanknote()
+          {
+            Random rand = new Random();
+            int banknote_index = rand.Next(0,99);
+            alice_connection.Send(1, Helper.GetBytes(Helper.GetIntBinaryString(banknote_index)));
+          }
+        public void checkBanknotes()
+        {
+            //
+            Console.WriteLine("I'm waiting for 99 banknotes");
+            List<Banknote> banknotes = new List<Banknote>();
+            List<Series> s_series;
+            List<Series> b_series;
+            List<Series> l_series;
+
+            List<Series> t_series;
+            List<Series> c_series;
+            List<Series> r_series;
+
+            //Sprawdzamy czy kwota sie zgadza na kazdym banknocie
+            if (banknotes.Count == 99)
+            {
+                for (int i = 0; i < 99; i++)
+                {
+                    for (int j = 0; j < 99; j++)
+                    {
+                        if (banknotes[i].amount == banknotes[j].amount) { }
+                        else
+                        {
+                            Console.WriteLine("Kwoty sie nie zgadzaja, Alice dopuscila sie proby oszustwa.");
+                            break;
+                        }
+                    }
+                }
+
+                //Sprawdzamy czy kazdy banknot ma różne identyfikatory
+                if (banknotes.Count == 99)
+                {
+                    for (int i = 0; i < 99; i++)
+                    {
+                        for (int j = 0; j < 99; j++)
+                        {
+                            if (banknotes[i].id == banknotes[j].id)
+                            {
+
+                                Console.WriteLine("Identyfikatory sie pokrywaja, Alice dopuscila sie proby oszustwa.");
+                                break;
+                            }
+                            else { continue; }
+                        }
+                    }
+                }
+                //Weryfikujemy zobowiazania bitowe
+                if (banknotes.Count == 99)
+                {
+
+                }
+            }
+        }
+
+        public void sendRSAPublicKey(RSA rsa)
+        {
+            var rsa_key = rsa.GetPublicKey();
+            byte[] rsa_kbytes = Helper.GetBytes(rsa_key);
+            alice_connection.Send(1, Helper.GetBytes(rsa_key));
+        }
+        }
     }
-}
