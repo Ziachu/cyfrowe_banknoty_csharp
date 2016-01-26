@@ -91,6 +91,7 @@ namespace CyfroweBanknoty.Users
             int banknote_index = rand.Next(0,99);
             alice_connection.Send(1, Helper.GetBytes(Helper.GetIntBinaryString(banknote_index)));
           }
+
         public void checkBanknotes()
         {
             //
