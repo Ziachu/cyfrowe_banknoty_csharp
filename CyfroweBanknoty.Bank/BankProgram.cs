@@ -25,6 +25,7 @@ namespace CyfroweBanknoty.BankProgram
 
             Console.WriteLine("[info]: Picking single banknote to sign...");
             bank.PickOneBanknote();
+            Console.WriteLine("[info]: I've selected {0} banknote, decision sent to Alice.", bank.banknote_index);
             Console.ReadLine();
         }
     }

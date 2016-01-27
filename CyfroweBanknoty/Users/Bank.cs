@@ -35,6 +35,7 @@ namespace CyfroweBanknoty.Users
 
         private Connection alice_connection;
         public List<HiddenBanknote> hidden_banknotes;
+        public int banknote_index;
 
         public Bank()
         {
@@ -122,7 +123,8 @@ namespace CyfroweBanknoty.Users
         public void PickOneBanknote()
         { 
             Random rand = new Random();
-            int banknote_index = rand.Next(0,99);
+            banknote_index = rand.Next(0, hidden_banknotes.Count());
+
             alice_connection.Send(1, BitConverter.GetBytes(banknote_index));
         }
 

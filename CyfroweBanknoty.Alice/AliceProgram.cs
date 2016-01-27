@@ -56,6 +56,9 @@ namespace CyfroweBanknoty.AliceProgram
             alice.SendHiddenBanknotes();
             Console.WriteLine("[info]: {0} banknotes sent.", alice.hidden_banknotes.Count());
 
+            Console.WriteLine("[info]: Waiting for Bank to choose single banknote....");
+            alice.ReceiveSelectedBanknoteIndex();
+            Console.WriteLine("[info]: Received decision from Bank: " + alice.selected_banknote_index);
             Console.ReadLine();
         }
     }

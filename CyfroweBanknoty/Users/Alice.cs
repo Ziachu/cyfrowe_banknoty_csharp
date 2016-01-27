@@ -19,8 +19,8 @@ namespace CyfroweBanknoty.Users
         // PART I
         // ------
         // step 1. Alice prepares 100 banknotes                         ✓
-        // step 2. Alice hides created banknotes
-        // step 3. Alice sends hidden banknotes over to Bank
+        // step 2. Alice hides created banknotes                        ✓
+        // step 3. Alice sends hidden banknotes over to Bank            ✓
         // [jump to Bank.cs][step 4.]
         // step 5. Alice reveals 99 hidden banknotes
         // [jump to Bank.cs][steps 6.-8.]
@@ -300,6 +300,11 @@ namespace CyfroweBanknoty.Users
                     hidden_banknotes[i].Send(bank_connection);
                 }
             }
+        }
+
+        public void ReceiveSelectedBanknoteIndex()
+        {
+
         }
 
         private void SendShownBankotes(List<Banknote> banknotes, int index)
