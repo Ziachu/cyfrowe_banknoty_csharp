@@ -5,6 +5,7 @@ using Org.BouncyCastle.Security;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
+using System.Collections.Generic;
 
 namespace CyfroweBanknoty.Tools
 {
@@ -12,7 +13,6 @@ namespace CyfroweBanknoty.Tools
     {
         private RSACryptoServiceProvider rsa;
         // random value to blind objects
-        private BigInteger r;
 
         private BigInteger n;
         private BigInteger e;
@@ -75,12 +75,13 @@ namespace CyfroweBanknoty.Tools
             DrawR();
         }
 
-        private void DrawR()
+        public BigInteger DrawR()
         {
             if (n != null)
             {
                 BigInteger gcd = null;
                 BigInteger one = new BigInteger("1");
+                BigInteger r = null;
 
                 SecureRandom random = new SecureRandom();
                 byte[] randomBytes = new byte[10];
@@ -93,14 +94,17 @@ namespace CyfroweBanknoty.Tools
                     gcd = r.Gcd(n);
                 }
                 while (!gcd.Equals(one) || r.CompareTo(n) >= 0 || r.CompareTo(one) <= 0);
+
+                return r;
             } else
             {
                 Console.WriteLine("[fail] Get public key from Bank first!");
+                return null;
             }
         }
 
         // --- m => b
-        public BigInteger BlindObject(byte[] message)
+        public BigInteger BlindObject(byte[] message, BigInteger r)
         {
             BigInteger m = new BigInteger(message);
             BigInteger b = ((r.ModPow(e, n)).Multiply(m)).Mod(n);
@@ -116,7 +120,7 @@ namespace CyfroweBanknoty.Tools
         }
 
         // --- bs => s
-        public BigInteger UnblindSignature(BigInteger bs)
+        public BigInteger UnblindSignature(BigInteger bs, BigInteger r)
         {
             BigInteger s = ((r.ModInverse(n)).Multiply(bs)).Mod(n);
             return s;

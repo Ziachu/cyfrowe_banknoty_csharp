@@ -23,6 +23,8 @@ namespace CyfroweBanknoty.BankProgram
             bank.ReceiveHiddenBanknotes();
             Console.WriteLine("[info]: {0} banknotes received.", bank.hidden_banknotes.Count());
 
+            Console.WriteLine("[info]: Picking single banknote to sign...");
+            bank.PickOneBanknote();
             Console.ReadLine();
         }
     }
