@@ -33,10 +33,12 @@ namespace CyfroweBanknoty.Users
         private Tools.RSA rsa;
 
         private Connection alice_connection;
+        public List<HiddenBanknote> hidden_banknotes;
 
         public Bank()
         {
             rsa = new Tools.RSA(true);
+            hidden_banknotes = new List<HiddenBanknote>();
         }
 
         public void SendPublicKeyTo(string to)
@@ -44,6 +46,7 @@ namespace CyfroweBanknoty.Users
             if (to == "Alice")
             {
                 alice_connection.Send(0, Helper.GetBytes(rsa.GetPublicKey()));
+                //Console.WriteLine("\t[debug]: publick_key_in_xml: " + rsa.GetPublicKey());
             } else if (to == "Vendor")
             {
                 // ...
@@ -100,7 +103,21 @@ namespace CyfroweBanknoty.Users
                 Console.WriteLine("Secrets cannot be XORed (because of different lengths).");
             }
         }
-            
+         
+        public void ReceiveHiddenBanknotes()
+        {
+            int no_banknotes = BitConverter.ToInt32(alice_connection.Receive(0), 0);
+            Console.WriteLine("[info] Waiting for {0} banknotes.", no_banknotes);
+
+            for (int i = 0; i < no_banknotes; i++)
+            {
+                var banknote = new HiddenBanknote();
+                banknote.Receive(alice_connection);
+                hidden_banknotes.Add(banknote);
+                //Console.WriteLine("\t[debug]: Received and acknowledged!");
+            }
+        }
+           
         public void pickOneBanknote()
           {
             Random rand = new Random();

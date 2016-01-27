@@ -19,6 +19,10 @@ namespace CyfroweBanknoty.BankProgram
             Console.WriteLine("[info]: Sending public key to Alice.");
             bank.SendPublicKeyTo("Alice");
 
+            Console.WriteLine("[info]: Waiting for banknotes from Alice...");
+            bank.ReceiveHiddenBanknotes();
+            Console.WriteLine("[info]: {0} banknotes received.", bank.hidden_banknotes.Count());
+
             Console.ReadLine();
         }
     }

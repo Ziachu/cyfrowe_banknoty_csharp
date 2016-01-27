@@ -47,7 +47,14 @@ namespace CyfroweBanknoty.AliceProgram
 
             Console.WriteLine("[info]: Hiding banknotes...");
             alice.HideBanknotes();
-            alice.hidden_banknotes[0].VisualizeHiddenBanknote();
+
+            // --- visualizing hidden banknotes
+
+            //alice.hidden_banknotes[0].VisualizeHiddenBanknote();
+
+            Console.WriteLine("[info]: Sending hidden banknotes to Bank...");
+            alice.SendHiddenBanknotes();
+            Console.WriteLine("[info]: {0} banknotes sent.", alice.hidden_banknotes.Count());
 
             Console.ReadLine();
         }

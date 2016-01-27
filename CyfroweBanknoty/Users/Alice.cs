@@ -105,6 +105,9 @@ namespace CyfroweBanknoty.Users
             {
                 var public_key_in_bytes = bank_connection.Receive(1);
                 var public_key_in_xml = Helper.GetString(public_key_in_bytes);
+
+                //Console.WriteLine("\t[debug]: publick_key_in_xml: " + public_key_in_xml);
+
                 rsa.SetPublicKey(public_key_in_xml);
 
                 Console.WriteLine("[info]: I've got public key from Bank!");
@@ -246,20 +249,15 @@ namespace CyfroweBanknoty.Users
         public void HideBanknotes()
         {
             hidden_banknotes = new List<HiddenBanknote>();
-            Console.WriteLine("\t[debug]: Here." + banknotes.Count());
 
             for (int i = 0; i < banknotes.Count(); i++)
             {
                 hidden_banknotes.Add(new HiddenBanknote());
-                Console.WriteLine("\t[debug]: banknote amount");
-                Console.WriteLine("\t" + banknotes[i].amount);
                 byte[] am = Helper.GetBytesDouble(banknotes[i].amount);
                 hidden_banknotes[i].amount = rsa.BlindObject(am);
-                Console.WriteLine("\t[debug]: amount: " + hidden_banknotes[i].amount);
 
                 byte[] id = BitConverter.GetBytes(banknotes[i].id);
                 hidden_banknotes[i].id = rsa.BlindObject(id);
-                Console.WriteLine("\t[debug]: id: " + hidden_banknotes[i].id);
 
                 for (int j = 0; j < alice_ids.Count(); j++)
                 {
@@ -270,6 +268,20 @@ namespace CyfroweBanknoty.Users
                 }
 
                 Console.WriteLine("[info]: {0}. hidden.", i);
+            }
+        }
+
+        public void SendHiddenBanknotes()
+        {
+            if (hidden_banknotes.Count() > 0)
+            {
+                bank_connection.Send(1, BitConverter.GetBytes(banknotes.Count()));
+                //hidden_banknotes[0].Send(bank_connection);
+
+                for (int i = 0; i < banknotes.Count(); i++)
+                {
+                    hidden_banknotes[i].Send(bank_connection);
+                }
             }
         }
 
@@ -313,3 +325,4 @@ namespace CyfroweBanknoty.Users
         }
     }
 }
+    
