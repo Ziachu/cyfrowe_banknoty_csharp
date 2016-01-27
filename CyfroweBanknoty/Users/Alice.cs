@@ -1,5 +1,6 @@
 ﻿using CyfroweBanknoty.Objects;
 using CyfroweBanknoty.Tools;
+using Org.BouncyCastle.Math;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -40,6 +41,7 @@ namespace CyfroweBanknoty.Users
         // ---------------------------------------------------------
 
         public List<Banknote> banknotes;
+        public List<HiddenBanknote> hidden_banknotes;
 
         // xor alice_ids;
         public List<Series> l_secret;
@@ -78,16 +80,16 @@ namespace CyfroweBanknoty.Users
         // step 1.
         public void GenerateBanknotes(double amount, int no_banknotes)
         {
-            Console.WriteLine("[info] Drawing right secrets...");
+            Console.WriteLine("[info]: Drawing right secrets...");
             DrawRightSecret();
-            Console.WriteLine("[info] XORing left secrets...");
+            Console.WriteLine("[info]: XORing left secrets...");
             XORLeftSecret();
-            Console.WriteLine("[info] Commiting scheme for right & left secrets...");
+            Console.WriteLine("[info]: Commiting scheme for right & left secrets...");
             CommitSchemes();
 
             List<int> ids = GenerateRandomIds(no_banknotes);
 
-            Console.Write("[info] Generating banknotes: ");
+            Console.Write("[info]: Generating banknotes: ");
             for (int i = 0; i < no_banknotes; i++)
             {
                 Console.Write('.');
@@ -101,10 +103,11 @@ namespace CyfroweBanknoty.Users
         {
             if (bank_connection.socket.Connected)
             {
-                Console.WriteLine("[info] Getting public key from Bank.");
                 var public_key_in_bytes = bank_connection.Receive(1);
                 var public_key_in_xml = Helper.GetString(public_key_in_bytes);
                 rsa.SetPublicKey(public_key_in_xml);
+
+                Console.WriteLine("[info]: I've got public key from Bank!");
             } else
             {
                 Console.WriteLine("[fail] Establish connection with Bank first!");
@@ -135,7 +138,7 @@ namespace CyfroweBanknoty.Users
 
             var length = r_secret[0].length;
 
-            Console.Write("[info] Drawing series of length {0}, required to hash secrets: ", length);
+            Console.Write("[info]: Drawing series of length {0}, required to hash secrets: ", length);
             for (int i = 0; i < alice_ids.Count(); i++)
             {
                 Console.Write('.');
@@ -151,7 +154,7 @@ namespace CyfroweBanknoty.Users
 
             var sha1 = new SHA1CryptoServiceProvider();
 
-            Console.Write("\n[info] Hashing secrets: ");
+            Console.Write("\n[info]: Hashing secrets: ");
             for (int i = 0; i < alice_ids.Count(); i++)
             {
                 // --- hashing r_secrets with t_series and c_series
@@ -227,7 +230,7 @@ namespace CyfroweBanknoty.Users
 
             do
             {
-                Console.Write("\n[info] Generating random ids for banknotes: ");
+                Console.Write("\n[info]: Generating random ids for banknotes: ");
                 for (int i = 0; i < no_ids; i++)
                 {
                     Console.Write('.');
@@ -240,28 +243,36 @@ namespace CyfroweBanknoty.Users
             return ids;
         }
 
-        private List<Hidden_Banknote> HideBanknotes(List<Banknote> banknotes)
+        public void HideBanknotes()
         {
-            List<Hidden_Banknote> hidden_banknotes = new List<Hidden_Banknote>();
+            hidden_banknotes = new List<HiddenBanknote>();
+            Console.WriteLine("\t[debug]: Here." + banknotes.Count());
 
-            for( int i=0; i<99; i++)
+            for (int i = 0; i < banknotes.Count(); i++)
             {
+                hidden_banknotes.Add(new HiddenBanknote());
+                Console.WriteLine("\t[debug]: banknote amount");
+                Console.WriteLine("\t" + banknotes[i].amount);
                 byte[] am = Helper.GetBytesDouble(banknotes[i].amount);
                 hidden_banknotes[i].amount = rsa.BlindObject(am);
+                Console.WriteLine("\t[debug]: amount: " + hidden_banknotes[i].amount);
 
                 byte[] id = BitConverter.GetBytes(banknotes[i].id);
                 hidden_banknotes[i].id = rsa.BlindObject(id);
+                Console.WriteLine("\t[debug]: id: " + hidden_banknotes[i].id);
 
-                for (int j = 0; j < 99; j++)
+                for (int j = 0; j < alice_ids.Count(); j++)
                 {
-                    hidden_banknotes[i].s_series[j] = rsa.BlindObject(banknotes[i].s_series[j].values);
-                    hidden_banknotes[i].t_series[j] = rsa.BlindObject(banknotes[i].t_series[j].values);
-                    hidden_banknotes[i].u_hashes[j] = rsa.BlindObject(banknotes[i].u_hashes[j]);
-                    hidden_banknotes[i].w_hashes[j] = rsa.BlindObject(banknotes[i].w_hashes[j]);
+                    hidden_banknotes[i].s_series.Add(rsa.BlindObject(banknotes[i].s_series[j].values));
+                    hidden_banknotes[i].t_series.Add(rsa.BlindObject(banknotes[i].t_series[j].values));
+                    hidden_banknotes[i].u_hashes.Add(rsa.BlindObject(banknotes[i].u_hashes[j]));
+                    hidden_banknotes[i].w_hashes.Add(rsa.BlindObject(banknotes[i].w_hashes[j]));
                 }
+
+                Console.WriteLine("[info]: {0}. hidden.", i);
             }
-            return hidden_banknotes;
         }
+
         private void SendShownBankotes(List<Banknote> banknotes, int index)
         {
             //Przygotowanie listy banknotow do wyslania

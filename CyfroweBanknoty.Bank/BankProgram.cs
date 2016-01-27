@@ -12,11 +12,11 @@ namespace CyfroweBanknoty.BankProgram
         static void Main(string[] args)
         {
             Bank bank = new Bank();
-            Console.WriteLine("[info] Bank instance initialized.");
+            Console.WriteLine("[info]: Bank instance initialized.");
 
-            Console.WriteLine("[info] Estabilishing connection with Alice...");
+            Console.WriteLine("[info]: Estabilishing connection with Alice...");
             bank.EstablishConnectionWithAlice();
-            Console.WriteLine("[info] Sending public key to Alice.");
+            Console.WriteLine("[info]: Sending public key to Alice.");
             bank.SendPublicKeyTo("Alice");
 
             Console.ReadLine();

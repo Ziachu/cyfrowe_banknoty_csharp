@@ -16,17 +16,17 @@ namespace CyfroweBanknoty.AliceProgram
             // --- step 0.
             // --- --- generating unique Alice identifiers
 
-            Console.WriteLine("[info] Creating Alice user instance.");
+            Console.WriteLine("[info]: Creating Alice user instance.");
             Alice alice = new Alice();
 
             // --- step 1. (generating 100 banknotes)
             // --- --- hiding unique identifiers behind "l_secret" and "r_secret" series
             // --- --- 
-            ////alice.GenerateBanknotes(123.45, 10);
-            ////alice.banknotes[0].VisualizeBanknote();
+            alice.GenerateBanknotes(123.45, 10);
+            alice.banknotes[0].VisualizeBanknote();
             // --- printing Alice ids
 
-            //Console.WriteLine("[info] Alice ids:");
+            //Console.WriteLine("[info]: Alice ids:");
             //foreach(Series s in alice.alice_ids)
             //{
             //    Console.WriteLine(s);
@@ -34,14 +34,20 @@ namespace CyfroweBanknoty.AliceProgram
 
             // --- reading Alice ids from file (saved to file during creation)
 
-            //Console.WriteLine("\n[info] Alice ids (read from file):");
+            //Console.WriteLine("\n[info]: Alice ids (read from file):");
             //foreach(Series s in alice.transmitter.ReadSeriesFromFile("alice_ids.txt"))
             //{
             //    Console.WriteLine(s);
             //}
 
             alice.EstablishConnectionWithBank();
+
+            Console.WriteLine("[info]: Getting public key from Bank...");
             alice.GetPublicKeyFromBank();
+
+            Console.WriteLine("[info]: Hiding banknotes...");
+            alice.HideBanknotes();
+            alice.hidden_banknotes[0].VisualizeHiddenBanknote();
 
             Console.ReadLine();
         }

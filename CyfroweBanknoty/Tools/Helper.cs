@@ -50,7 +50,7 @@ namespace CyfroweBanknoty.Tools
         public static byte[] GetBytes(string str)
         {
             byte[] bytes = new byte[str.Length * sizeof(char)];
-            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
+            Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
             return bytes;
         }
 
@@ -60,11 +60,10 @@ namespace CyfroweBanknoty.Tools
             return byteArray;
         }
 
-
         public static string GetString(byte[] bytes)
         {
             char[] chars = new char[bytes.Length / sizeof(char)];
-            System.Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+            Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
             return new string(chars);
         }
     }

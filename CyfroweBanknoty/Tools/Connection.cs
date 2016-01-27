@@ -29,7 +29,7 @@ namespace CyfroweBanknoty.Tools
 
         ~Connection()
         {
-            Console.WriteLine("[info] Shutting down the connection...");
+            Console.WriteLine("[info]: Shutting down the connection...");
             socket.Close();
         }
 
