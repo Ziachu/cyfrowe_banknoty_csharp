@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Objects\Banknote.cs" />
+    <Compile Include="Objects\Hidden_Banknote.cs" />
     <Compile Include="Objects\Series.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\Connection.cs" />

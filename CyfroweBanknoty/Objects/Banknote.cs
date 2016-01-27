@@ -17,7 +17,6 @@ namespace CyfroweBanknoty.Objects
         public List<byte[]> u_hashes;
         public List<byte[]> w_hashes;
 
-        public bool hidden = false;
 
         public Banknote(double amount, int id, List<Series> s_series, List<Series> t_series, List<byte[]> u_hashes, List<byte[]> w_hashes)
         {
@@ -35,7 +34,6 @@ namespace CyfroweBanknoty.Objects
             Console.WriteLine("--- amount: {0}", amount);
             Console.WriteLine("--- id: {0} ---", id);
             Console.WriteLine("--- contains {0} (4 x {1}) series, each of length: {2} ---", t_series.Count() * 4, t_series.Count(), t_series[0].length);
-            Console.WriteLine(hidden ? "--- is hidden ---" : "--- is not hidden ---");
         }
     }
 }
