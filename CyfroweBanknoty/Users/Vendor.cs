@@ -36,7 +36,7 @@ namespace CyfroweBanknoty.Users
         }
         public bool checkSignature()
         {
-
+            return false;
         }
         //Sprzedawca generuje losowo 100 bitow
         public void generateRandomSeriesAndSendToAlice()
