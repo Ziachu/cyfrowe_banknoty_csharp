@@ -50,7 +50,7 @@ namespace CyfroweBanknoty.AliceProgram
 
             // --- visualizing hidden banknotes
 
-            //alice.hidden_banknotes[0].VisualizeHiddenBanknote();
+            alice.hidden_banknotes[0].VisualizeHiddenBanknote();
 
             Console.WriteLine("[info]: Sending hidden banknotes to Bank...");
             alice.SendHiddenBanknotes();
@@ -59,6 +59,9 @@ namespace CyfroweBanknoty.AliceProgram
             Console.WriteLine("[info]: Waiting for Bank to choose single banknote....");
             alice.ReceiveSelectedBanknoteIndex();
             Console.WriteLine("[info]: Received decision from Bank: " + alice.selected_banknote_index);
+
+            Console.WriteLine("[info]: Sending to Bank elements required to reveal banknotes...");
+            alice.RevealBanknotes();
             Console.ReadLine();
         }
     }

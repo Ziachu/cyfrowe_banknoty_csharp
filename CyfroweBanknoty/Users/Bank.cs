@@ -19,7 +19,7 @@ namespace CyfroweBanknoty.Users
         // ------
         // PART I
         // ------
-        // step 4. Bank picks one banknote and demands disclosure of the rest
+        // step 4. Bank picks one banknote and demands disclosure of the rest       ✓
         // step 6. Bank verifies 99 banknotes
         // step 7. Bank signs picked banknote
         // step 8. Bank sends signed banknote over to Alice
@@ -35,6 +35,18 @@ namespace CyfroweBanknoty.Users
 
         private Connection alice_connection;
         public List<HiddenBanknote> hidden_banknotes;
+        public List<BigInteger> secrets;
+
+        public List<Series> l_secret;
+        public List<Series> r_secret;
+
+        public List<Series> t_series;
+        public List<Series> c_series;
+        public List<Series> s_series;
+        public List<Series> b_series;
+        public List<byte[]> w_hashes;
+        public List<byte[]> u_hashes;
+
         public int banknote_index;
 
         public Bank()
@@ -125,7 +137,71 @@ namespace CyfroweBanknoty.Users
             Random rand = new Random();
             banknote_index = rand.Next(0, hidden_banknotes.Count());
 
-            alice_connection.Send(1, BitConverter.GetBytes(banknote_index));
+            alice_connection.Send(0, BitConverter.GetBytes(banknote_index));
+        }
+
+        public void ReceiveMissingBanknotesPartsFromAlice()
+        {
+            int no_secrets = BitConverter.ToInt32(alice_connection.Receive(0), 0);
+            alice_connection.Send(0, new byte[1]);
+
+            Console.WriteLine("\t[debug]: Waiting for {0} secrets.", no_secrets);
+
+            secrets = new List<BigInteger>();
+
+            for (int i = 0; i < no_secrets; i++)
+            {
+                if (i != banknote_index)
+                {
+                    secrets.Add(new BigInteger(alice_connection.Receive(0)));
+                    alice_connection.Send(0, new byte[1]);
+                    Console.WriteLine("\t[debug]: Secret {0} received.", i);
+                } else
+                {
+                    secrets.Add(new BigInteger("1"));
+                    Console.WriteLine("\t[debug]: Secret for index {0} ommited.", i);
+                }
+            }
+
+            int no_series = BitConverter.ToInt32(alice_connection.Receive(0), 0);
+            alice_connection.Send(0, new byte[1]);
+
+            Console.WriteLine("\t[debug]: Waiting for {0} (S, B, L, T, C, R) series.", no_series * 6);
+
+            t_series = new List<Series>();
+            c_series = new List<Series>();
+            s_series = new List<Series>();
+            b_series = new List<Series>();
+
+            l_secret = new List<Series>();
+            r_secret = new List<Series>();
+
+            var tmp = new Series();
+
+            for (int i = 0; i < no_series; i++)
+            {
+                tmp.Receive(alice_connection);
+                s_series.Add(tmp);
+
+                tmp.Receive(alice_connection);
+                b_series.Add(tmp);
+
+                tmp.Receive(alice_connection);
+                l_secret.Add(tmp);
+
+                tmp.Receive(alice_connection);
+                t_series.Add(tmp);
+
+                tmp.Receive(alice_connection);
+                c_series.Add(tmp);
+
+                tmp.Receive(alice_connection);
+                r_secret.Add(tmp);
+
+                Console.WriteLine("\t[debug]: {0} received.", (i + 1) * 6);
+            }
+
+            Console.WriteLine("[info] {0} series (S, B, L, T, C, R) received.", s_series.Count() * 6);
         }
 
         public void checkBanknotes()

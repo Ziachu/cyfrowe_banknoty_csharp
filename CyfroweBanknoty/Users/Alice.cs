@@ -18,11 +18,11 @@ namespace CyfroweBanknoty.Users
         // ------
         // PART I
         // ------
-        // step 1. Alice prepares 100 banknotes                         ✓
+        // step 1. Alice prepares banknotes                             ✓
         // step 2. Alice hides created banknotes                        ✓
         // step 3. Alice sends hidden banknotes over to Bank            ✓
         // [jump to Bank.cs][step 4.]
-        // step 5. Alice reveals 99 hidden banknotes
+        // step 5. Alice reveals hidden banknotes
         // [jump to Bank.cs][steps 6.-8.]
 
         // -------
@@ -42,6 +42,7 @@ namespace CyfroweBanknoty.Users
 
         public List<Banknote> banknotes;
         public List<HiddenBanknote> hidden_banknotes;
+        public int selected_banknote_index;
 
         // xor alice_ids;
         public List<Series> l_secret;
@@ -304,7 +305,48 @@ namespace CyfroweBanknoty.Users
 
         public void ReceiveSelectedBanknoteIndex()
         {
+            selected_banknote_index = BitConverter.ToInt32(bank_connection.Receive(1), 0);
+        }
 
+        public void RevealBanknotes()
+        {
+            Console.WriteLine("\t[debug]: Sending {0} secrets.", secrets.Count());
+
+            bank_connection.Send(1, BitConverter.GetBytes(secrets.Count()));
+            bank_connection.Receive(1);
+
+            for (int i = 0; i < secrets.Count(); i++)
+            {
+                if (i != selected_banknote_index)
+                {
+                    bank_connection.Send(1, secrets[i].ToByteArray());
+                    bank_connection.Receive(1);
+                    Console.WriteLine("\t[debug]: Secret {0} sent.", i);
+                }
+            }
+
+            Console.WriteLine("[info] {0} secrets sent.", secrets.Count());
+
+            Console.WriteLine("[info] {0} series to be sent.", s_series.Count() * 6);
+            bank_connection.Send(1, BitConverter.GetBytes(s_series.Count()));
+            bank_connection.Receive(1);
+
+            for (int j = 0; j < s_series.Count(); j++)
+            {
+                s_series[j].Send(bank_connection);
+                b_series[j].Send(bank_connection);
+                l_secret[j].Send(bank_connection);
+
+                t_series[j].Send(bank_connection);
+                c_series[j].Send(bank_connection);
+                r_secret[j].Send(bank_connection);
+
+                Console.WriteLine("\t[debug]: {0} sent.", (j + 1) * 6);
+            }
+
+            Console.WriteLine("[info] {0} series (S, B, L, T, C, R) sent.", s_series.Count() * 6);
+
+            //Console.WriteLine("[info] Elements required to reveal banknote sent.");
         }
 
         private void SendShownBankotes(List<Banknote> banknotes, int index)

@@ -112,6 +112,13 @@ namespace CyfroweBanknoty.Tools
             return b;
         }
 
+        // --- b => m
+        public byte[] UnblindObject(BigInteger y, BigInteger r)
+        {
+            BigInteger m = ((r.ModInverse(n)).Multiply(y)).Mod(n);
+            return m.ToByteArray();
+        }
+
         // --- b => bs
         public BigInteger SignObject(BigInteger m)
         {
