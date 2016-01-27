@@ -41,6 +41,7 @@ namespace CyfroweBanknoty.AliceProgram
             //}
 
             alice.EstablishConnectionWithBank();
+            alice.GetPublicKeyFromBank();
 
             Console.ReadLine();
         }

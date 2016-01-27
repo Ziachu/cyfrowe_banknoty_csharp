@@ -97,6 +97,19 @@ namespace CyfroweBanknoty.Users
             Console.WriteLine("");
         }
 
+        public void GetPublicKeyFromBank()
+        {
+            if (bank_connection.socket.Connected)
+            {
+                var public_key_in_bytes = bank_connection.Receive(1);
+                var public_key_in_xml = Helper.GetString(public_key_in_bytes);
+                rsa.SetPublicKey(public_key_in_xml);
+            } else
+            {
+                Console.WriteLine("[fail] Establish connection with Bank first!");
+            }
+        }
+
         public void EstablishConnectionWithBank()
         {
             bank_connection = new Connection();

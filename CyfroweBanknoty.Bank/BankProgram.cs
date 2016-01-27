@@ -16,6 +16,9 @@ namespace CyfroweBanknoty.BankProgram
 
             Console.WriteLine("[info] Estabilishin connection with Alice...");
             bank.EstablishConnectionWithAlice();
+            bank.SendPublicKeyTo("Alice");
+
+            Console.ReadLine();
         }
     }
 }

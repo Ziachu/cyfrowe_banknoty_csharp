@@ -34,6 +34,17 @@ namespace CyfroweBanknoty.Users
             rsa = new RSA();
         }
 
+        public void SendPublicKeyTo(string to)
+        {
+            if (to == "Alice")
+            {
+                alice_connection.Send(0, Helper.GetBytes(rsa.GetPublicKey()));
+            } else if (to == "Vendor")
+            {
+                // ...
+            }
+        }
+
         public void EstablishConnectionWithAlice()
         {
             alice_connection = new Connection();
