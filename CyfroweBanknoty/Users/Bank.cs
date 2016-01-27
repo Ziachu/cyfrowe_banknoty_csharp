@@ -31,6 +31,7 @@ namespace CyfroweBanknoty.Users
         // step 16. Bank verifies if banknote was not used before
 
         private Tools.RSA rsa;
+        List<Banknote> used_banknotes = new List<Banknote>();
 
         private Connection alice_connection;
 
@@ -168,5 +169,27 @@ namespace CyfroweBanknoty.Users
             byte[] rsa_kbytes = Helper.GetBytes(rsa_key);
             alice_connection.Send(1, Helper.GetBytes(rsa_key));
         }
+
+        public bool checkIfBanknoteIsNotUsed(Banknote banknote)
+        {
+            int length = used_banknotes.Count;
+            for (int i = 0; i < length; i++)
+            {
+                if (banknote.id != used_banknotes[i].id && banknote.u_hashes != used_banknotes[i].u_hashes && banknote.w_hashes != used_banknotes[i].w_hashes)
+                {
+                    for (int j = 0; j < 99; j++)
+                    {
+                        if(banknote.s_series[j].values != used_banknotes[i].s_series[j].values && banknote.t_series[j].values != used_banknotes[i].t_series[j].values)
+                        {
+
+                        }
+                        else { return false; }
+                    }
+                }
+                else { return false; }
+            }
+            return true;
+        }
+
         }
     }
