@@ -14,13 +14,13 @@ namespace CyfroweBanknoty.Tools
         {
             IPHostEntry ipHostInfo = Dns.GetHostEntry("");
 
-            Console.WriteLine("------------------");
-            Console.WriteLine("All available IPs:");
-            foreach (IPAddress addr in ipHostInfo.AddressList)
-                Console.WriteLine("ip: " + addr);
-            Console.WriteLine("------------------\n");
+            //Console.WriteLine("------------------");
+            //Console.WriteLine("All available IPs:");
+            //foreach (IPAddress addr in ipHostInfo.AddressList)
+            //    Console.WriteLine("ip: " + addr);
+            //Console.WriteLine("------------------\n");
 
-            IPAddress ipAddress = ipHostInfo.AddressList[3];
+            IPAddress ipAddress = ipHostInfo.AddressList[1];
             ipEndPoint = new IPEndPoint(ipAddress, 4445);
             Console.WriteLine(ipEndPoint);
 

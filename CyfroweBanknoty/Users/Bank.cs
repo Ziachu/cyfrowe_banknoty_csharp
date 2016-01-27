@@ -5,6 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CyfroweBanknoty.Objects;
+using System.Security.Cryptography;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.Security;
+using Org.BouncyCastle.Math;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Generators;
 
 namespace CyfroweBanknoty.Users
 {
@@ -24,14 +30,13 @@ namespace CyfroweBanknoty.Users
         // step 15. Bank verifies signature under banknote
         // step 16. Bank verifies if banknote was not used before
 
-        private RSA rsa;
-
+        private Tools.RSA rsa;
 
         private Connection alice_connection;
 
         public Bank()
         {
-            rsa = new RSA();
+            rsa = new Tools.RSA(true);
         }
 
         public void SendPublicKeyTo(string to)
@@ -157,7 +162,7 @@ namespace CyfroweBanknoty.Users
             }
         }
 
-        public void sendRSAPublicKey(RSA rsa)
+        public void sendRSAPublicKey(Tools.RSA rsa)
         {
             var rsa_key = rsa.GetPublicKey();
             byte[] rsa_kbytes = Helper.GetBytes(rsa_key);

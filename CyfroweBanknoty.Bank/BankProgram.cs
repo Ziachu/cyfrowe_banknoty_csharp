@@ -14,8 +14,9 @@ namespace CyfroweBanknoty.BankProgram
             Bank bank = new Bank();
             Console.WriteLine("[info] Bank instance initialized.");
 
-            Console.WriteLine("[info] Estabilishin connection with Alice...");
+            Console.WriteLine("[info] Estabilishing connection with Alice...");
             bank.EstablishConnectionWithAlice();
+            Console.WriteLine("[info] Sending public key to Alice.");
             bank.SendPublicKeyTo("Alice");
 
             Console.ReadLine();

@@ -76,15 +76,11 @@ namespace CyfroweBanknoty.Tools
 
             using (StreamReader stream = new StreamReader(file, Encoding.UTF8))
             {
-                //Console.WriteLine("[debug] File opened.");
-
                 string[] file_content = stream.ReadToEnd().Split(';');
                 var splitted_content = file_content.Take(file_content.Length - 1);
 
                 foreach (string series_string in splitted_content)
                 {
-                    //Console.WriteLine("[debug] Series in string format: " + series_string);
-
                     string[] parts = series_string.Split('-');
                     byte[] values = new byte[parts.Length];
 

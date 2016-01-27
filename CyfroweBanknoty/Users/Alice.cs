@@ -70,7 +70,7 @@ namespace CyfroweBanknoty.Users
             r_secret = new List<Series>();
             transmitter = new Transmitter();
 
-            rsa = new Tools.RSA();
+            rsa = new Tools.RSA(false);
 
             GenerateAliceIdentifiers(5, 10, "alice_ids.txt");
         }
@@ -101,6 +101,7 @@ namespace CyfroweBanknoty.Users
         {
             if (bank_connection.socket.Connected)
             {
+                Console.WriteLine("[info] Getting public key from Bank.");
                 var public_key_in_bytes = bank_connection.Receive(1);
                 var public_key_in_xml = Helper.GetString(public_key_in_bytes);
                 rsa.SetPublicKey(public_key_in_xml);

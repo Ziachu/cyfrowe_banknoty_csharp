@@ -18,17 +18,18 @@ namespace CyfroweBanknoty.Tools
         private BigInteger e;
         private BigInteger d;
 
-        public RSA()
+        public RSA(bool it_is_bank)
         {
             rsa = new RSACryptoServiceProvider();
 
-            // w przypadku Alice można zignorować, metoda SetPublicKey()
-            // i tak nadpisze te wartości
-            var privateKey = rsa.ExportParameters(true);
+            if (it_is_bank)
+            {
+                var privateKey = rsa.ExportParameters(true);
 
-            e = new BigInteger(privateKey.Exponent);
-            n = new BigInteger(privateKey.Modulus);
-            d = new BigInteger(privateKey.D);
+                e = new BigInteger(privateKey.Exponent);
+                n = new BigInteger(privateKey.Modulus).Abs();
+                d = new BigInteger(privateKey.D);
+            }
         }
 
         //metoda szyfrująca
@@ -64,11 +65,11 @@ namespace CyfroweBanknoty.Tools
         public void SetPublicKey(string rsa_params)
         {
             rsa.FromXmlString(rsa_params);
-
+            
             var publicKey = rsa.ExportParameters(false);
 
             e = new BigInteger(publicKey.Exponent);
-            n = new BigInteger(publicKey.Modulus);
+            n = new BigInteger(publicKey.Modulus).Abs();
             d = null;
 
             DrawR();
@@ -76,20 +77,26 @@ namespace CyfroweBanknoty.Tools
 
         private void DrawR()
         {
-            BigInteger gcd = null;
-            BigInteger one = new BigInteger("1");
-
-            SecureRandom random = new SecureRandom();
-            byte[] randomBytes = new byte[10];
-
-            // --- verify that gcd(r,n) = 1 && r < n && r > 1
-            do
+            if (n != null)
             {
-                random.NextBytes(randomBytes);
-                r = new BigInteger(1, randomBytes);
-                gcd = r.Gcd(n);
+                BigInteger gcd = null;
+                BigInteger one = new BigInteger("1");
+
+                SecureRandom random = new SecureRandom();
+                byte[] randomBytes = new byte[10];
+
+                // --- verify that gcd(r,n) = 1 && r < n && r > 1
+                do
+                {
+                    random.NextBytes(randomBytes);
+                    r = new BigInteger(1, randomBytes);
+                    gcd = r.Gcd(n);
+                }
+                while (!gcd.Equals(one) || r.CompareTo(n) >= 0 || r.CompareTo(one) <= 0);
+            } else
+            {
+                Console.WriteLine("[fail] Get public key from Bank first!");
             }
-            while (!gcd.Equals(one) || r.CompareTo(n) >= 0 || r.CompareTo(one) <= 0);
         }
 
         // --- m => b
