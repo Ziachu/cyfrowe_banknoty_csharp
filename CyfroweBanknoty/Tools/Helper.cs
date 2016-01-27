@@ -54,6 +54,13 @@ namespace CyfroweBanknoty.Tools
             return bytes;
         }
 
+        public static byte[] GetBytesDouble(double argument)
+        {
+            byte[] byteArray = BitConverter.GetBytes(argument);
+            return byteArray;
+        }
+
+
         public static string GetString(byte[] bytes)
         {
             char[] chars = new char[bytes.Length / sizeof(char)];

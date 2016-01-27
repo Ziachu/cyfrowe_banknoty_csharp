@@ -239,5 +239,27 @@ namespace CyfroweBanknoty.Users
             return ids;
         }
 
+        private List<Hidden_Banknote> HideBanknotes(List<Banknote> banknotes)
+        {
+            List<Hidden_Banknote> hidden_banknotes = new List<Hidden_Banknote>();
+
+            for( int i=0; i<99; i++)
+            {
+                byte[] am = Helper.GetBytesDouble(banknotes[i].amount);
+                hidden_banknotes[i].amount = rsa.BlindObject(am);
+
+                byte[] id = BitConverter.GetBytes(banknotes[i].id);
+                hidden_banknotes[i].id = rsa.BlindObject(id);
+
+                for (int j = 0; j < 99; j++)
+                {
+                    hidden_banknotes[i].s_series[j] = rsa.BlindObject(banknotes[i].s_series[j].values);
+                    hidden_banknotes[i].t_series[j] = rsa.BlindObject(banknotes[i].t_series[j].values);
+                    hidden_banknotes[i].u_hashes[j] = rsa.BlindObject(banknotes[i].u_hashes[j]);
+                    hidden_banknotes[i].w_hashes[j] = rsa.BlindObject(banknotes[i].w_hashes[j]);
+                }
+            }
+            return hidden_banknotes;
+        }
     }
 }
