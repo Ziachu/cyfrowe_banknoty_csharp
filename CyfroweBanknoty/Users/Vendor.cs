@@ -32,7 +32,22 @@ namespace CyfroweBanknoty.Users
         //sprzedawca otrzymuje od Alice banknot w raz z podpisem[Mj, Sj] i oblicza S' = M^e(mod N) i sprawdza czy podpis zgadza sie z S od Alice
         public void getBanknote()
         {
+            //Banknote banknote = new Banknote;
+            byte[] amount_byte = null;// tu musimy odebrac od Alice kwote
+            double amount = BitConverter.ToDouble(amount_byte, 0);
 
+            byte[] id_byte = null;//odbieramy
+            int id = BitConverter.ToInt32(id_byte, 0);
+
+            for (int i = 0; i < 99; i++)
+            {
+                byte[] s_byte = null;//odbieramy
+                byte[] t_byte = null;//odbieramy
+                byte[] u_byte = null;//odbieramy
+                byte[] w_byte = null;//odbieramy
+                //wysylamy
+
+            }
         }
         public bool checkSignature()
         {
