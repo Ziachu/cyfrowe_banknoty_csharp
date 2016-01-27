@@ -3,7 +3,6 @@ C:\Users\Damian\Documents\GitHub\cyfrowe_banknoty_csharp\CyfroweBanknoty\bin\Deb
 C:\Users\Damian\Documents\GitHub\cyfrowe_banknoty_csharp\CyfroweBanknoty\bin\Debug\CyfroweBanknoty.pdb
 C:\Users\Damian\Documents\GitHub\cyfrowe_banknoty_csharp\CyfroweBanknoty\bin\Debug\BouncyCastle.Crypto.dll
 C:\Users\Damian\Documents\GitHub\cyfrowe_banknoty_csharp\CyfroweBanknoty\bin\Debug\BouncyCastle.Crypto.pdb
-C:\Users\Damian\Documents\GitHub\cyfrowe_banknoty_csharp\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.csprojResolveAssemblyReference.cache
 C:\Users\Damian\Documents\GitHub\cyfrowe_banknoty_csharp\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.dll
 C:\Users\Damian\Documents\GitHub\cyfrowe_banknoty_csharp\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.pdb
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\bin\Debug\CyfroweBanknoty.dll.config
