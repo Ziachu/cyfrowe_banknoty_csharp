@@ -11,8 +11,8 @@ C:\Users\Damian\Documents\GitHub\cyfrowe_banknoty_csharp\CyfroweBanknoty.Alice\o
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\bin\Debug\CyfroweBanknoty.Alice.exe.config
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\bin\Debug\CyfroweBanknoty.Alice.exe
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\bin\Debug\CyfroweBanknoty.Alice.pdb
-C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\bin\Debug\CyfroweBanknoty.dll
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\bin\Debug\CyfroweBanknoty.dll
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\bin\Debug\CyfroweBanknoty.pdb
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\bin\Debug\BouncyCastle.Crypto.pdb
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty.Alice\obj\Debug\CyfroweBanknoty.AliceProgram.csprojResolveAssemblyReference.cache

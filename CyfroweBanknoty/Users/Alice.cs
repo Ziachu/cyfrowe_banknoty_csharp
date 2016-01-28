@@ -310,7 +310,7 @@ namespace CyfroweBanknoty.Users
 
         public void RevealBanknotes()
         {
-            Console.WriteLine("\t[debug]: Sending {0} secrets.", secrets.Count());
+            Console.WriteLine("\t[debug]: Sending {0} secrets.", secrets.Count() - 1);
 
             bank_connection.Send(1, BitConverter.GetBytes(secrets.Count()));
             bank_connection.Receive(1);
@@ -321,7 +321,10 @@ namespace CyfroweBanknoty.Users
                 {
                     bank_connection.Send(1, secrets[i].ToByteArray());
                     bank_connection.Receive(1);
-                    Console.WriteLine("\t[debug]: Secret {0} sent.", i);
+                    Console.WriteLine("\t[debug]: Secret {0} sent: {1}", i, secrets[i]);
+                } else
+                {
+                    Console.WriteLine("\t[debug]: Secret {0} ommited.", i);
                 }
             }
 

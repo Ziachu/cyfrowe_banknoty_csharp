@@ -107,16 +107,44 @@ namespace CyfroweBanknoty.Tools
         public BigInteger BlindObject(byte[] message, BigInteger r)
         {
             BigInteger m = new BigInteger(message);
-            BigInteger b = ((r.ModPow(e, n)).Multiply(m)).Mod(n);
+            BigInteger b = (r.ModPow(e, n).Multiply(m)).Mod(n);
 
+            Console.WriteLine("m: {0}\nr: {1}\ne: {2}\nn: {3}\nb: {4}", m, r, e, n, b);
             return b;
         }
 
         // --- b => m
         public byte[] UnblindObject(BigInteger y, BigInteger r)
         {
-            BigInteger m = ((r.ModInverse(n)).Multiply(y)).Mod(n);
+            //BigInteger m = (r.ModPow(e.ModInverse(n), n).Multiply(y)).Mod(n);
+            BigInteger m = (y.Divide(r.ModPow(e, n))).Mod(n);
+
+            Console.WriteLine("m: {0}\nr: {1}\ne: {2}\nn: {3}\ny: {4}", m, r, e, n, y);
             return m.ToByteArray();
+        }
+
+        public void CheckEquality(BigInteger m, BigInteger r, BigInteger y)
+        {
+            //r = new BigInteger("2");
+            //n = new BigInteger("3");
+
+            //Console.WriteLine("\n\nr: " + r);
+            //var one = new BigInteger("1");
+            //Console.WriteLine("\n\none: " + one);
+            //Console.WriteLine("\n\nr^{-1}: " + one.Divide(r));
+            //Console.WriteLine("\n\nr * r^{-1}: " + r.Multiply(one.Divide(r)));
+            //Console.WriteLine("\n\n2 * 2 % 3: " + r.Multiply(r).Mod(n));
+            //Console.WriteLine("\n\n2 ^ 3 % 3: " + r.ModPow(n, n));
+            //Console.WriteLine("\n\nr / r: " + r.Divide(r));
+            //Console.WriteLine("\n\nr / r: " + r.Divide(r));
+
+            if (m.ToByteArray() == UnblindObject(BlindObject(m.ToByteArray(), r), r))
+            {
+                Console.WriteLine("equal");                
+            } else
+            {
+                Console.WriteLine("not equal");
+            }
         }
 
         // --- b => bs

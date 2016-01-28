@@ -17,6 +17,7 @@ namespace CyfroweBanknoty.Objects
         public List<byte[]> u_hashes;
         public List<byte[]> w_hashes;
 
+        public Banknote() { }
 
         public Banknote(double amount, int id, List<Series> s_series, List<Series> t_series, List<byte[]> u_hashes, List<byte[]> w_hashes)
         {

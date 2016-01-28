@@ -19,6 +19,8 @@ namespace CyfroweBanknoty.Objects
             this.values = values;
         }
 
+        public Series() { }
+
         // generate random series of given length
         public Series(int length)
         {
@@ -27,7 +29,11 @@ namespace CyfroweBanknoty.Objects
             GenerateRandomValues(length);
         }
 
-        public Series() { }
+        public Series(byte[] values)
+        {
+            this.values = values;
+            length = values.Length;
+        }
 
         private void GenerateRandomValues(int length)
         {

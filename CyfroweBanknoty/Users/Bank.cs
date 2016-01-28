@@ -35,6 +35,7 @@ namespace CyfroweBanknoty.Users
 
         private Connection alice_connection;
         public List<HiddenBanknote> hidden_banknotes;
+        public List<Banknote> revealed_banknotes;
         public List<BigInteger> secrets;
 
         public List<Series> l_secret;
@@ -155,7 +156,7 @@ namespace CyfroweBanknoty.Users
                 {
                     secrets.Add(new BigInteger(alice_connection.Receive(0)));
                     alice_connection.Send(0, new byte[1]);
-                    Console.WriteLine("\t[debug]: Secret {0} received.", i);
+                    Console.WriteLine("\t[debug]: Secret {0} received: {1}", i, secrets[i]);
                 } else
                 {
                     secrets.Add(new BigInteger("1"));
@@ -204,6 +205,44 @@ namespace CyfroweBanknoty.Users
             }
 
             Console.WriteLine("[info]: {0} series (S, B, L, T, C, R) received.", s_series.Count() * 6);
+        }
+
+        public void RevealHiddenBanknotes()
+        {
+            revealed_banknotes = new List<Banknote>();
+
+            for (int i = 0; i < hidden_banknotes.Count(); i++)
+            {
+                if (i != banknote_index)
+                {
+                    var r = secrets[i];
+                    var y = hidden_banknotes[i];
+                    var m = new Banknote();
+
+                    m.amount = BitConverter.ToDouble(rsa.UnblindObject(y.amount, r), 0);
+                    m.id = BitConverter.ToInt32(rsa.UnblindObject(y.id, r), 0);
+
+                    m.s_series = new List<Series>();
+                    m.t_series = new List<Series>();
+                    m.u_hashes = new List<byte[]>();
+                    m.w_hashes = new List<byte[]>();
+
+                    for (int j = 0; j < y.s_series.Count(); j++)
+                    {
+                        m.s_series.Add(new Series(rsa.UnblindObject(y.s_series[j], r)));
+                        m.t_series.Add(new Series(rsa.UnblindObject(y.t_series[j], r)));
+                        m.u_hashes.Add(rsa.UnblindObject(y.u_hashes[j], r));
+                        m.w_hashes.Add(rsa.UnblindObject(y.w_hashes[j], r));
+                    }
+
+                    revealed_banknotes.Add(m);
+
+                    Console.WriteLine("\t[debug]: Banknote number {0}. revealed.", revealed_banknotes[i].id);
+                } else
+                {
+                    revealed_banknotes.Add(null);
+                }
+            }
         }
 
         public void checkBanknotes()
