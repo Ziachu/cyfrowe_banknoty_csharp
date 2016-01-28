@@ -22,7 +22,7 @@ namespace CyfroweBanknoty.Users
         // step 2. Alice hides created banknotes                        ✓
         // step 3. Alice sends hidden banknotes over to Bank            ✓
         // [jump to Bank.cs][step 4.]
-        // step 5. Alice reveals hidden banknotes
+        // step 5. Alice reveals hidden banknotes                       ✓
         // [jump to Bank.cs][steps 6.-8.]
 
         // -------

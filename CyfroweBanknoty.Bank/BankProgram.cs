@@ -32,7 +32,7 @@ namespace CyfroweBanknoty.BankProgram
             Console.WriteLine("[info]: I've selected banknote with index {0}, decision sent to Alice.\n\tWaiting for disclosure of the rest...", bank.banknote_index);
 
             bank.ReceiveMissingBanknotesPartsFromAlice();
-            Console.WriteLine("[info]: Received from Alice {0} secrets (to reveal banknotes).", bank.secrets.Count() - 1);
+            
             Console.ReadLine();
         }
     }

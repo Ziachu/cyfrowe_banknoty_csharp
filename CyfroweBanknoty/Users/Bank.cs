@@ -20,7 +20,7 @@ namespace CyfroweBanknoty.Users
         // PART I
         // ------
         // step 4. Bank picks one banknote and demands disclosure of the rest       ✓
-        // step 6. Bank verifies 99 banknotes
+        // step 6. Bank verifies banknotes
         // step 7. Bank signs picked banknote
         // step 8. Bank sends signed banknote over to Alice
 
@@ -145,7 +145,7 @@ namespace CyfroweBanknoty.Users
             int no_secrets = BitConverter.ToInt32(alice_connection.Receive(0), 0);
             alice_connection.Send(0, new byte[1]);
 
-            Console.WriteLine("\t[debug]: Waiting for {0} secrets.", no_secrets);
+            Console.WriteLine("\t[debug]: Waiting for {0} secrets.", no_secrets - 1);
 
             secrets = new List<BigInteger>();
 
@@ -162,6 +162,8 @@ namespace CyfroweBanknoty.Users
                     Console.WriteLine("\t[debug]: Secret for index {0} ommited.", i);
                 }
             }
+
+            Console.WriteLine("[info]: Received from Alice {0} secrets (to reveal banknotes).", secrets.Count() - 1);
 
             int no_series = BitConverter.ToInt32(alice_connection.Receive(0), 0);
             alice_connection.Send(0, new byte[1]);
@@ -201,7 +203,7 @@ namespace CyfroweBanknoty.Users
                 Console.WriteLine("\t[debug]: {0} received.", (i + 1) * 6);
             }
 
-            Console.WriteLine("[info] {0} series (S, B, L, T, C, R) received.", s_series.Count() * 6);
+            Console.WriteLine("[info]: {0} series (S, B, L, T, C, R) received.", s_series.Count() * 6);
         }
 
         public void checkBanknotes()
