@@ -117,7 +117,10 @@ namespace CyfroweBanknoty.Tools
         public byte[] UnblindObject(BigInteger y, BigInteger r)
         {
             //BigInteger m = (r.ModPow(e.ModInverse(n), n).Multiply(y)).Mod(n);
-            BigInteger m = (y.Divide(r.ModPow(e, n))).Mod(n);
+
+            //BigInteger m = (y.Multiply(r.ModPow(e, n))).Mod(n);
+
+            BigInteger m = (y.Multiply(r.ModPow(e.Negate(), n))).Mod(n);
 
             Console.WriteLine("m: {0}\nr: {1}\ne: {2}\nn: {3}\ny: {4}", m, r, e, n, y);
             return m.ToByteArray();
@@ -137,13 +140,20 @@ namespace CyfroweBanknoty.Tools
             //Console.WriteLine("\n\n2 ^ 3 % 3: " + r.ModPow(n, n));
             //Console.WriteLine("\n\nr / r: " + r.Divide(r));
             //Console.WriteLine("\n\nr / r: " + r.Divide(r));
-
-            if (m.ToByteArray() == UnblindObject(BlindObject(m.ToByteArray(), r), r))
+            byte[] blind = BlindObject(m.ToByteArray(), r).ToByteArray();
+            byte[] unblind = UnblindObject(BlindObject(m.ToByteArray(), r), r);
+            byte[] m_byte = m.ToByteArray();
+            
+            for(int i =0; i< m_byte.Length; i++)
             {
-                Console.WriteLine("equal");                
-            } else
-            {
-                Console.WriteLine("not equal");
+                if (m_byte[i] == unblind[i])
+                {
+                    Console.WriteLine("jupiii");
+                }
+                else
+                {
+                    Console.WriteLine("not equal");
+                }
             }
         }
 

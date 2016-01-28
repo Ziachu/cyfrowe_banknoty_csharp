@@ -12,3 +12,4 @@ C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\bin\Debug\BouncyCastle.C
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\bin\Debug\BouncyCastle.Crypto.pdb
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.dll
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.pdb
+C:\Users\Damian\Documents\GitHub\cyfrowe_banknoty_csharp\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.csprojResolveAssemblyReference.cache
