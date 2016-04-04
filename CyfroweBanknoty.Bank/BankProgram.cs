@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CyfroweBanknoty.Users;
 using Org.BouncyCastle.Crypto;
+using CyfroweBanknoty.Objects;
 
 namespace CyfroweBanknoty.BankProgram
 {
@@ -46,7 +47,19 @@ namespace CyfroweBanknoty.BankProgram
             Console.WriteLine("[info]: {0} banknotes revealed.", bank.revealed_banknotes.Count() - 1);
 
             // --- step 6. Bank verifies banknotes
-
+            // --- --- visualizing revealed banknotes
+            Console.WriteLine("[info]: Revealed banknotes:");
+            foreach (Banknote banknote in bank.revealed_banknotes)
+            {
+                try
+                {
+                    banknote.VisualizeBanknote();
+                }
+                catch (NullReferenceException e)
+                {
+                    continue;
+                }
+            }
 
             Console.ReadLine();
         }

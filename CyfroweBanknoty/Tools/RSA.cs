@@ -117,7 +117,6 @@ namespace CyfroweBanknoty.Tools
         public byte[] UnblindObject(BigInteger y, BigInteger r)
         {
             //BigInteger m = (r.ModPow(e.ModInverse(n), n).Multiply(y)).Mod(n);
-
             //BigInteger m = (y.Multiply(r.ModPow(e, n))).Mod(n);
 
             BigInteger m = (y.Multiply(r.ModPow(e.Negate(), n))).Mod(n);

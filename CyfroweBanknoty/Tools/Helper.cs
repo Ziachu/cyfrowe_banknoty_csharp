@@ -66,7 +66,7 @@ namespace CyfroweBanknoty.Tools
             return byteArray;
         }
 
-        public static string GetString(byte[] bytes)
+        public static string GetStringFromBytes(byte[] bytes)
         {
             char[] chars = new char[bytes.Length / sizeof(char)];
             Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);

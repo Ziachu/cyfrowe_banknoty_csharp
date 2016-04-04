@@ -24,6 +24,12 @@ namespace CyfroweBanknoty.AliceProgram
             // --- --- generating 100 banknotes
             alice.GenerateBanknotes(123, 10);
             alice.banknotes[0].VisualizeBanknote();
+
+            Console.WriteLine("[info]: Banknote IDs:");
+            foreach (Banknote banknote in alice.banknotes)
+            {
+                Console.WriteLine("\t[debug]: {0}", banknote.id);
+            }
             
             // --- --- printing Alice ids
             Console.WriteLine("[info]: Alice ids:");

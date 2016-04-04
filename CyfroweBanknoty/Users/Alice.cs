@@ -108,7 +108,7 @@ namespace CyfroweBanknoty.Users
             if (bank_connection.socket.Connected)
             {
                 var public_key_in_bytes = bank_connection.Receive(1);
-                var public_key_in_xml = Helper.GetString(public_key_in_bytes);
+                var public_key_in_xml = Helper.GetStringFromBytes(public_key_in_bytes);
 
                 //Console.WriteLine("\t[debug]: publick_key_in_xml: " + public_key_in_xml);
 
@@ -148,12 +148,16 @@ namespace CyfroweBanknoty.Users
             Console.Write("[info]: Drawing series of length {0}, required to hash secrets: ", length);
             for (int i = 0; i < alice_ids.Count(); i++)
             {
-                Console.Write('.');
+
                 t_series.Add(new Series(length));
-                Console.WriteLine("printint t_series[{0}]: {1}", i, t_series[i]);
+                Console.WriteLine("\tt_series[{0}]: {1}", i, t_series[i]);
+                Console.Write('.');
                 c_series.Add(new Series(length));
+                Console.Write('.');
                 s_series.Add(new Series(length));
+                Console.Write('.');
                 b_series.Add(new Series(length));
+                Console.Write('.');
             }
 
             w_hashes = new List<byte[]>();
@@ -188,8 +192,6 @@ namespace CyfroweBanknoty.Users
                 hash = sha1.ComputeHash(data);
                 u_hashes.Add(hash);
             }
-
-            Console.WriteLine("");
         }
 
         public void DrawRightSecret()
@@ -247,7 +249,7 @@ namespace CyfroweBanknoty.Users
 
             do
             {
-                Console.Write("\n[info]: Generating random ids for banknotes: ");
+                Console.WriteLine("[info]: Generating random ids for banknotes: ");
                 for (int i = 0; i < no_ids; i++)
                 {
                     Console.Write('.');
@@ -299,6 +301,17 @@ namespace CyfroweBanknoty.Users
                 for (int i = 0; i < banknotes.Count(); i++)
                 {
                     hidden_banknotes[i].Send(bank_connection);
+
+                    // every two banknotes
+                    if (i % 2 == 0)
+                    {
+                        // receive acknowledge
+                        var ack = Helper.GetStringFromBytes(bank_connection.Receive(1));
+                        if (ack == "ack")
+                            Console.WriteLine("\t[debug]: Received an acknowledge!");
+                        else
+                            Console.WriteLine("\t[debug]: Something went wrong with ACK...");                        
+                    }
                 }
             }
         }

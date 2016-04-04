@@ -129,7 +129,13 @@ namespace CyfroweBanknoty.Users
                 var banknote = new HiddenBanknote();
                 banknote.Receive(alice_connection);
                 hidden_banknotes.Add(banknote);
-                //Console.WriteLine("\t[debug]: Received and acknowledged!");
+
+                // every two banknotes...
+                if (i % 2 == 0)
+                {
+                    // send acknowledge
+                    alice_connection.Send(0, Helper.GetBytes("ack"));
+                }
             }
         }
            
