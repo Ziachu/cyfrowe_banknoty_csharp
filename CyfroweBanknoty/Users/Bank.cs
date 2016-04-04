@@ -219,7 +219,7 @@ namespace CyfroweBanknoty.Users
                     var y = hidden_banknotes[i];
                     var m = new Banknote();
 
-                    m.amount = BitConverter.ToDouble(rsa.UnblindObject(y.amount, r), 0);
+                    m.amount = BitConverter.ToInt32(rsa.UnblindObject(y.amount, r), 0);
                     m.id = BitConverter.ToInt32(rsa.UnblindObject(y.id, r), 0);
 
                     m.s_series = new List<Series>();

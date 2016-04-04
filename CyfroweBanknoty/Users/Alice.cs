@@ -82,7 +82,7 @@ namespace CyfroweBanknoty.Users
         }
 
         // step 1.
-        public void GenerateBanknotes(double amount, int no_banknotes)
+        public void GenerateBanknotes(int amount, int no_banknotes)
         {
             Console.WriteLine("[info]: Drawing right secrets...");
             DrawRightSecret();
@@ -271,7 +271,7 @@ namespace CyfroweBanknoty.Users
             for (int i = 0; i < banknotes.Count(); i++)
             {
                 hidden_banknotes.Add(new HiddenBanknote());
-                byte[] am = Helper.GetBytesDouble(banknotes[i].amount);
+                byte[] am = Helper.GetBytesInteger(banknotes[i].amount);
                 hidden_banknotes[i].amount = rsa.BlindObject(am, secrets[i]);
 
                 byte[] id = BitConverter.GetBytes(banknotes[i].id);

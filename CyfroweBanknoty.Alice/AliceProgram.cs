@@ -15,70 +15,74 @@ namespace CyfroweBanknoty.AliceProgram
         static void Main(string[] args)
         {
 
-            //// --- step 0.
-            //// --- --- generating unique Alice identifiers
+            // --- step 1. Alice prepares banknotes
+            
+            // --- --- generating unique Alice identifiers
+            Console.WriteLine("[info]: Creating Alice user instance.");
+            Alice alice = new Alice();
 
-            //Console.WriteLine("[info]: Creating Alice user instance.");
-            //Alice alice = new Alice();
+            // --- --- generating 100 banknotes
+            alice.GenerateBanknotes(123, 10);
+            alice.banknotes[0].VisualizeBanknote();
+            
+            // --- --- printing Alice ids
+            Console.WriteLine("[info]: Alice ids:");
+            foreach (Series s in alice.alice_ids)
+            {
+                Console.WriteLine(s);
+            }
 
-            //// --- step 1. (generating 100 banknotes)
-            //// --- --- hiding unique identifiers behind "l_secret" and "r_secret" series
-            //// --- --- 
-            //alice.GenerateBanknotes(123.45, 10);
-            //alice.banknotes[0].VisualizeBanknote();
-            //// --- printing Alice ids
+            // --- --- reading Alice ids from file (saved to file during creation)
+            Console.WriteLine("\n[info]: Alice ids (read from file):");
+            foreach (Series s in alice.transmitter.ReadSeriesFromFile("alice_ids.txt"))
+            {
+                Console.WriteLine(s);
+            }
 
-            ////Console.WriteLine("[info]: Alice ids:");
-            ////foreach(Series s in alice.alice_ids)
-            ////{
-            ////    Console.WriteLine(s);
-            ////}
+            // --- --- establishing connection with Bank
+            alice.EstablishConnectionWithBank();
 
-            //// --- reading Alice ids from file (saved to file during creation)
+            Console.WriteLine("[info]: Getting public key from Bank...");
+            alice.GetPublicKeyFromBank();
 
-            ////Console.WriteLine("\n[info]: Alice ids (read from file):");
-            ////foreach(Series s in alice.transmitter.ReadSeriesFromFile("alice_ids.txt"))
-            ////{
-            ////    Console.WriteLine(s);
-            ////}
+            // --- step 2. Alice hides created banknotes
+            Console.WriteLine("[info]: Hiding banknotes...");
+            alice.HideBanknotes();
 
-            //alice.EstablishConnectionWithBank();
+            // --- --- visualizing hidden banknotes
+            alice.hidden_banknotes[0].VisualizeHiddenBanknote();
 
-            //Console.WriteLine("[info]: Getting public key from Bank...");
-            //alice.GetPublicKeyFromBank();
+            // --- step 3. Alice sends hidden banknotes over to Bank
+            // --- --- sending hidden banknotes to Bank
+            Console.WriteLine("[info]: Sending hidden banknotes to Bank...");
+            alice.SendHiddenBanknotes();
+            Console.WriteLine("[info]: {0} banknotes sent.", alice.hidden_banknotes.Count());
 
-            //Console.WriteLine("[info]: Hiding banknotes...");
-            //alice.HideBanknotes();
+            // --- --- receiving index of selected banknote
+            Console.WriteLine("[info]: Waiting for Bank to choose single banknote....");
+            alice.ReceiveSelectedBanknoteIndex();
+            Console.WriteLine("[info]: Received decision from Bank: " + alice.selected_banknote_index);
 
-            //// --- visualizing hidden banknotes
+            // --- step 5. Alice reveals hidden banknotes
+            Console.WriteLine("[info]: Sending to Bank elements required to reveal banknotes...");
+            alice.RevealBanknotes();
 
-            //alice.hidden_banknotes[0].VisualizeHiddenBanknote();
+            Console.ReadLine();
 
-            //Console.WriteLine("[info]: Sending hidden banknotes to Bank...");
-            //alice.SendHiddenBanknotes();
-            //Console.WriteLine("[info]: {0} banknotes sent.", alice.hidden_banknotes.Count());
+            //RSA rsa = new RSA(true);
+            //BigInteger r = rsa.DrawR();
+            ////Console.WriteLine("r: " + r);
 
-            //Console.WriteLine("[info]: Waiting for Bank to choose single banknote....");
-            //alice.ReceiveSelectedBanknoteIndex();
-            //Console.WriteLine("[info]: Received decision from Bank: " + alice.selected_banknote_index);
+            //string msg1 = "Hello World!";
+            //byte[] bytes = Helper.GetBytes(msg1);
+            //BigInteger m = new BigInteger(bytes);
 
-            //Console.WriteLine("[info]: Sending to Bank elements required to reveal banknotes...");
-            //alice.RevealBanknotes();
+            //BigInteger y = rsa.BlindObject(bytes, r);
+            ////Console.WriteLine("y: " + y);
 
-            //Console.ReadLine();
+            //rsa.CheckEquality(m, r, y);
 
-            RSA rsa = new RSA(true);
-            BigInteger r = rsa.DrawR();
-            //Console.WriteLine("r: " + r);
-
-            string msg1 = "Hello World!";
-            byte[] bytes = Helper.GetBytes(msg1);
-            BigInteger m = new BigInteger(bytes);
-
-            BigInteger y = rsa.BlindObject(bytes, r);
-            //Console.WriteLine("y: " + y);
-
-            rsa.CheckEquality(m, r, y);
+            //Console.ReadKey();
 
             //byte[] res = rsa.UnblindObject(y, r);
 

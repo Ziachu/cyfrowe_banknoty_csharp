@@ -34,7 +34,7 @@ namespace CyfroweBanknoty.Users
         {
             //Banknote banknote = new Banknote;
             byte[] amount_byte = null;// tu musimy odebrac od Alice kwote
-            double amount = BitConverter.ToDouble(amount_byte, 0);
+            int amount = BitConverter.ToInt32(amount_byte, 0);
 
             byte[] id_byte = null;//odbieramy
             int id = BitConverter.ToInt32(id_byte, 0);

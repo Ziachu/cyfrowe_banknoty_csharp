@@ -109,7 +109,7 @@ namespace CyfroweBanknoty.Tools
             BigInteger m = new BigInteger(message);
             BigInteger b = (r.ModPow(e, n).Multiply(m)).Mod(n);
 
-            Console.WriteLine("m: {0}\nr: {1}\ne: {2}\nn: {3}\nb: {4}", m, r, e, n, b);
+            //Console.WriteLine("m: {0}\nr: {1}\ne: {2}\nn: {3}\nb: {4}", m, r, e, n, b);
             return b;
         }
 
@@ -122,7 +122,7 @@ namespace CyfroweBanknoty.Tools
 
             BigInteger m = (y.Multiply(r.ModPow(e.Negate(), n))).Mod(n);
 
-            Console.WriteLine("m: {0}\nr: {1}\ne: {2}\nn: {3}\ny: {4}", m, r, e, n, y);
+            //Console.WriteLine("m: {0}\nr: {1}\ne: {2}\nn: {3}\ny: {4}", m, r, e, n, y);
             return m.ToByteArray();
         }
 
