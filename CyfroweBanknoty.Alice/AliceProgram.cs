@@ -45,11 +45,14 @@ namespace CyfroweBanknoty.AliceProgram
                 Console.WriteLine(s);
             }
 
-            // --- --- establishing connection with Bank
-            alice.EstablishConnectionWithBank();
+            //// --- --- establishing connection with Bank
+            //alice.EstablishConnectionWithBank();
 
-            Console.WriteLine("[info]: Getting public key from Bank...");
-            alice.GetPublicKeyFromBank();
+            //Console.WriteLine("[info]: Getting public key from Bank...");
+            //alice.GetPublicKeyFromBank();
+
+            // --- --- establishing connection with herself (creating keys)
+            alice.rsa = new RSA(true);
 
             // --- step 2. Alice hides created banknotes
             Console.WriteLine("[info]: Hiding banknotes...");
@@ -64,22 +67,56 @@ namespace CyfroweBanknoty.AliceProgram
                 Console.WriteLine("\t" + hidden_bank.id);
             }
 
-            // --- step 3. Alice sends hidden banknotes over to Bank
-            // --- --- sending hidden banknotes to Bank
-            Console.WriteLine("[info]: Sending hidden banknotes to Bank...");
-            alice.SendHiddenBanknotes();
-            Console.WriteLine("[info]: {0} banknotes sent.", alice.hidden_banknotes.Count());
+            //// --- step 3. Alice sends hidden banknotes over to Bank
+            //// --- --- sending hidden banknotes to Bank
+            //Console.WriteLine("[info]: Sending hidden banknotes to Bank...");
+            //alice.SendHiddenBanknotes();
+            //Console.WriteLine("[info]: {0} banknotes sent.", alice.hidden_banknotes.Count());
 
-            // --- --- receiving index of selected banknote
-            Console.WriteLine("[info]: Waiting for Bank to choose single banknote....");
-            alice.ReceiveSelectedBanknoteIndex();
-            Console.WriteLine("[info]: Received decision from Bank: " + alice.selected_banknote_index);
+            //// --- --- receiving index of selected banknote
+            //Console.WriteLine("[info]: Waiting for Bank to choose single banknote....");
+            //alice.ReceiveSelectedBanknoteIndex();
+            //Console.WriteLine("[info]: Received decision from Bank: " + alice.selected_banknote_index);
 
-            // --- step 5. Alice reveals hidden banknotes
-            Console.WriteLine("[info]: Sending to Bank elements required to reveal banknotes...");
-            alice.RevealBanknotes();
+            //// --- step 5. Alice reveals hidden banknotes
+            //Console.WriteLine("[info]: Sending to Bank elements required to reveal banknotes...");
+            //alice.RevealBanknotes();
 
-            Console.ReadLine();
+            // --- --- revealing hidden banknotes
+            List<Banknote> revealed_banknotes = new List<Banknote>();
+
+            for (int i = 0; i < alice.hidden_banknotes.Count(); i++)
+            {
+                    var r = alice.secrets[i];
+                    var y = alice.hidden_banknotes[i];
+                    var m = new Banknote();
+
+                    m.amount = BitConverter.ToInt64(alice.rsa.UnblindObject(y.amount, r), 0);
+                    m.id = BitConverter.ToInt64(alice.rsa.UnblindObject(y.id, r), 0);
+
+                    Console.WriteLine("\t[debug]: Revealed banknote {0}\t\twith secret {1}.", m.id, r);
+
+                    m.s_series = new List<Series>();
+                    m.t_series = new List<Series>();
+                    m.u_hashes = new List<byte[]>();
+                    m.w_hashes = new List<byte[]>();
+
+                    for (int j = 0; j < y.s_series.Count(); j++)
+                    {
+                        m.s_series.Add(new Series(alice.rsa.UnblindObject(y.s_series[j], r)));
+                        m.t_series.Add(new Series(alice.rsa.UnblindObject(y.t_series[j], r)));
+                        m.u_hashes.Add(alice.rsa.UnblindObject(y.u_hashes[j], r));
+                        m.w_hashes.Add(alice.rsa.UnblindObject(y.w_hashes[j], r));
+                    }
+
+                    revealed_banknotes.Add(m);
+
+                    //Console.WriteLine("\t[debug]: Banknote number {0}. revealed.", revealed_banknotes[i].id);
+            }
+
+            
+
+            //Console.ReadLine();
 
             //RSA rsa = new RSA(true);
             //BigInteger r = rsa.DrawR();

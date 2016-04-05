@@ -145,19 +145,19 @@ namespace CyfroweBanknoty.Users
 
             var length = r_secret[0].length;
 
-            Console.Write("[info]: Drawing series of length {0}, required to hash secrets: ", length);
+            Console.Write("[info]: Drawing series of length {0}, required to hash secrets: \n", length);
             for (int i = 0; i < alice_ids.Count(); i++)
             {
 
                 t_series.Add(new Series(length));
-                Console.WriteLine("\tt_series[{0}]: {1}", i, t_series[i]);
+                Console.Write("\tt_series[{0}]: {1}", i, t_series[i]);
                 Console.Write('.');
                 c_series.Add(new Series(length));
                 Console.Write('.');
                 s_series.Add(new Series(length));
                 Console.Write('.');
                 b_series.Add(new Series(length));
-                Console.Write('.');
+                Console.Write(".\n");
             }
 
             w_hashes = new List<byte[]>();
@@ -249,7 +249,7 @@ namespace CyfroweBanknoty.Users
 
             do
             {
-                Console.WriteLine("[info]: Generating random ids for banknotes: ");
+                Console.Write("\n[info]: Generating random ids for banknotes: ");
                 for (int i = 0; i < no_ids; i++)
                 {
                     Console.Write('.');
