@@ -58,6 +58,12 @@ namespace CyfroweBanknoty.AliceProgram
             // --- --- visualizing hidden banknotes
             alice.hidden_banknotes[0].VisualizeHiddenBanknote();
 
+            Console.WriteLine("\n[debug]: Hidden banknote IDs in BigIntegers:");
+            foreach (HiddenBanknote hidden_bank in alice.hidden_banknotes)
+            {
+                Console.WriteLine("\t" + hidden_bank.id);
+            }
+
             // --- step 3. Alice sends hidden banknotes over to Bank
             // --- --- sending hidden banknotes to Bank
             Console.WriteLine("[info]: Sending hidden banknotes to Bank...");

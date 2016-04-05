@@ -34,10 +34,10 @@ namespace CyfroweBanknoty.Users
         {
             //Banknote banknote = new Banknote;
             byte[] amount_byte = null;// tu musimy odebrac od Alice kwote
-            int amount = BitConverter.ToInt32(amount_byte, 0);
+            long amount = BitConverter.ToInt64(amount_byte, 0);
 
             byte[] id_byte = null;//odbieramy
-            int id = BitConverter.ToInt32(id_byte, 0);
+            long id = BitConverter.ToInt64(id_byte, 0);
 
             for (int i = 0; i < 99; i++)
             {

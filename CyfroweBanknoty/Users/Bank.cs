@@ -225,8 +225,10 @@ namespace CyfroweBanknoty.Users
                     var y = hidden_banknotes[i];
                     var m = new Banknote();
 
-                    m.amount = BitConverter.ToInt32(rsa.UnblindObject(y.amount, r), 0);
-                    m.id = BitConverter.ToInt32(rsa.UnblindObject(y.id, r), 0);
+                    m.amount = BitConverter.ToInt64(rsa.UnblindObject(y.amount, r), 0);
+                    m.id = BitConverter.ToInt64(rsa.UnblindObject(y.id, r), 0);
+
+                    Console.WriteLine("\t[debug]: Revealing banknote {0}\t\twith secret {1}.", m.id, r);
 
                     m.s_series = new List<Series>();
                     m.t_series = new List<Series>();
@@ -243,7 +245,7 @@ namespace CyfroweBanknoty.Users
 
                     revealed_banknotes.Add(m);
 
-                    Console.WriteLine("\t[debug]: Banknote number {0}. revealed.", revealed_banknotes[i].id);
+                    //Console.WriteLine("\t[debug]: Banknote number {0}. revealed.", revealed_banknotes[i].id);
                 } else
                 {
                     revealed_banknotes.Add(null);

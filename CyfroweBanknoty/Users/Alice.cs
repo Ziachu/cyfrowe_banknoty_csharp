@@ -272,8 +272,10 @@ namespace CyfroweBanknoty.Users
 
             for (int i = 0; i < banknotes.Count(); i++)
             {
+                Console.WriteLine("\t[debug]: Hiding banknote {0}\t\twith secret {1}.", banknotes[i].id, secrets[i]);
                 hidden_banknotes.Add(new HiddenBanknote());
-                byte[] am = Helper.GetBytesInteger(banknotes[i].amount);
+                //byte[] am = Helper.GetBytesInteger(banknotes[i].amount);
+                byte[] am = BitConverter.GetBytes(banknotes[i].amount);
                 hidden_banknotes[i].amount = rsa.BlindObject(am, secrets[i]);
 
                 byte[] id = BitConverter.GetBytes(banknotes[i].id);
@@ -287,7 +289,7 @@ namespace CyfroweBanknoty.Users
                     hidden_banknotes[i].w_hashes.Add(rsa.BlindObject(banknotes[i].w_hashes[j], secrets[i]));
                 }
 
-                Console.WriteLine("[info]: {0}. hidden.", i);
+                //Console.WriteLine("[info]: {0}. hidden.", i);
             }
         }
 

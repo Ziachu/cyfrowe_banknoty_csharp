@@ -9,8 +9,8 @@ namespace CyfroweBanknoty.Objects
     public class Banknote
     {
         // implement banknote object
-        public int amount;
-        public int id;
+        public long amount;
+        public long id;
 
         public List<Series> s_series;
         public List<Series> t_series;
@@ -19,7 +19,7 @@ namespace CyfroweBanknoty.Objects
 
         public Banknote() { }
 
-        public Banknote(int amount, int id, List<Series> s_series, List<Series> t_series, List<byte[]> u_hashes, List<byte[]> w_hashes)
+        public Banknote(long amount, long id, List<Series> s_series, List<Series> t_series, List<byte[]> u_hashes, List<byte[]> w_hashes)
         {
             this.amount = amount;
             this.id = id;

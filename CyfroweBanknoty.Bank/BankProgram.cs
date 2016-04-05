@@ -28,6 +28,12 @@ namespace CyfroweBanknoty.BankProgram
             Console.WriteLine("[info]: Waiting for banknotes from Alice...");
             bank.ReceiveHiddenBanknotes();
 
+            Console.WriteLine("\n[debug]: Hidden banknote IDs in BigIntegers:");
+            foreach (HiddenBanknote hidden_bank in bank.hidden_banknotes)
+            {
+                Console.WriteLine("\t" + hidden_bank.id);
+            }
+
             // step 4. Bank picks one banknote and demands disclosure of the rest
             Console.WriteLine("[info]: {0} banknotes received.", bank.hidden_banknotes.Count());
 
@@ -48,18 +54,18 @@ namespace CyfroweBanknoty.BankProgram
 
             // --- step 6. Bank verifies banknotes
             // --- --- visualizing revealed banknotes
-            Console.WriteLine("[info]: Revealed banknotes:");
-            foreach (Banknote banknote in bank.revealed_banknotes)
-            {
-                try
-                {
-                    banknote.VisualizeBanknote();
-                }
-                catch (NullReferenceException e)
-                {
-                    continue;
-                }
-            }
+            //Console.WriteLine("[info]: Revealed banknotes:");
+            //foreach (Banknote banknote in bank.revealed_banknotes)
+            //{
+            //    try
+            //    {
+            //        banknote.VisualizeBanknote();
+            //    }
+            //    catch (NullReferenceException e)
+            //    {
+            //        continue;
+            //    }
+            //}
 
             Console.ReadLine();
         }

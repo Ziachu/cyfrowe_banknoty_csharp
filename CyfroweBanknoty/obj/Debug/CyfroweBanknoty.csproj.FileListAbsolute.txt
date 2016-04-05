@@ -13,3 +13,11 @@ C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\bin\Debug\BouncyCastle.C
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.dll
 C:\Users\ziach\Desktop\cyfrowe_banknoty\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.pdb
 C:\Users\Damian\Documents\GitHub\cyfrowe_banknoty_csharp\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.csprojResolveAssemblyReference.cache
+C:\Users\Hehehehehe\Desktop\cyfrowe_banknoty_csharp\CyfroweBanknoty\bin\Debug\CyfroweBanknoty.dll.config
+C:\Users\Hehehehehe\Desktop\cyfrowe_banknoty_csharp\CyfroweBanknoty\bin\Debug\CyfroweBanknoty.dll
+C:\Users\Hehehehehe\Desktop\cyfrowe_banknoty_csharp\CyfroweBanknoty\bin\Debug\CyfroweBanknoty.pdb
+C:\Users\Hehehehehe\Desktop\cyfrowe_banknoty_csharp\CyfroweBanknoty\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\Hehehehehe\Desktop\cyfrowe_banknoty_csharp\CyfroweBanknoty\bin\Debug\BouncyCastle.Crypto.pdb
+C:\Users\Hehehehehe\Desktop\cyfrowe_banknoty_csharp\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.csprojResolveAssemblyReference.cache
+C:\Users\Hehehehehe\Desktop\cyfrowe_banknoty_csharp\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.dll
+C:\Users\Hehehehehe\Desktop\cyfrowe_banknoty_csharp\CyfroweBanknoty\obj\Debug\CyfroweBanknoty.pdb
