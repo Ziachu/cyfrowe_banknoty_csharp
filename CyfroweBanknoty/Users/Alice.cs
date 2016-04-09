@@ -8,6 +8,9 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
+using Org.BouncyCastle.Security;
+using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Parameters;
 
 namespace CyfroweBanknoty.Users
 {
@@ -111,9 +114,7 @@ namespace CyfroweBanknoty.Users
                 var public_key_in_xml = Helper.GetStringFromBytes(public_key_in_bytes);
 
                 //Console.WriteLine("\t[debug]: publick_key_in_xml: " + public_key_in_xml);
-
-                rsa.SetPublicKey(public_key_in_xml);
-
+                
                 Console.WriteLine("[info]: I've got public key from Bank!");
             } else
             {
@@ -262,7 +263,7 @@ namespace CyfroweBanknoty.Users
             return ids;
         }
 
-        public void HideBanknotes()
+        public void HideBanknotes(RsaKeyParameters key)
         {
             Console.WriteLine("[info]: Drawing secrets...");
             secrets = new List<BigInteger>();
@@ -276,17 +277,17 @@ namespace CyfroweBanknoty.Users
                 hidden_banknotes.Add(new HiddenBanknote());
                 //byte[] am = Helper.GetBytesInteger(banknotes[i].amount);
                 byte[] am = BitConverter.GetBytes(banknotes[i].amount);
-                hidden_banknotes[i].amount = rsa.BlindObject(am, secrets[i]);
+                hidden_banknotes[i].amount = rsa.BlindObject(key, am, secrets[i]);
 
                 byte[] id = BitConverter.GetBytes(banknotes[i].id);
-                hidden_banknotes[i].id = rsa.BlindObject(id, secrets[i]);
+                hidden_banknotes[i].id = rsa.BlindObject(key, id, secrets[i]);
 
                 for (int j = 0; j < alice_ids.Count(); j++)
                 {
-                    hidden_banknotes[i].s_series.Add(rsa.BlindObject(banknotes[i].s_series[j].values, secrets[i]));
-                    hidden_banknotes[i].t_series.Add(rsa.BlindObject(banknotes[i].t_series[j].values, secrets[i]));
-                    hidden_banknotes[i].u_hashes.Add(rsa.BlindObject(banknotes[i].u_hashes[j], secrets[i]));
-                    hidden_banknotes[i].w_hashes.Add(rsa.BlindObject(banknotes[i].w_hashes[j], secrets[i]));
+                    hidden_banknotes[i].s_series.Add(rsa.BlindObject(key, banknotes[i].s_series[j].values, secrets[i]));
+                    hidden_banknotes[i].t_series.Add(rsa.BlindObject(key, banknotes[i].t_series[j].values, secrets[i]));
+                    hidden_banknotes[i].u_hashes.Add(rsa.BlindObject(key, banknotes[i].u_hashes[j], secrets[i]));
+                    hidden_banknotes[i].w_hashes.Add(rsa.BlindObject(key, banknotes[i].w_hashes[j], secrets[i]));
                 }
 
                 //Console.WriteLine("[info]: {0}. hidden.", i);

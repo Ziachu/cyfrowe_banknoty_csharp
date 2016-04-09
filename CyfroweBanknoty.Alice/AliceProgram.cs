@@ -56,7 +56,7 @@ namespace CyfroweBanknoty.AliceProgram
 
             // --- step 2. Alice hides created banknotes
             Console.WriteLine("[info]: Hiding banknotes...");
-            alice.HideBanknotes();
+            alice.HideBanknotes(alice.rsa.GetPubKey());
 
             // --- --- visualizing hidden banknotes
             alice.hidden_banknotes[0].VisualizeHiddenBanknote();
@@ -91,8 +91,8 @@ namespace CyfroweBanknoty.AliceProgram
                     var y = alice.hidden_banknotes[i];
                     var m = new Banknote();
 
-                    m.amount = BitConverter.ToInt64(alice.rsa.UnblindObject(y.amount, r), 0);
-                    m.id = BitConverter.ToInt64(alice.rsa.UnblindObject(y.id, r), 0);
+                    m.amount = BitConverter.ToInt64(alice.rsa.UnblindObject(alice.rsa.GetPubKey(), y.amount.ToByteArray(), r), 0);
+                    m.id = BitConverter.ToInt64(alice.rsa.UnblindObject(alice.rsa.GetPubKey(), y.id.ToByteArray(), r), 0);
 
                     Console.WriteLine("\t[debug]: Revealed banknote {0}\t\twith secret {1}.", m.id, r);
 
@@ -103,10 +103,10 @@ namespace CyfroweBanknoty.AliceProgram
 
                     for (int j = 0; j < y.s_series.Count(); j++)
                     {
-                        m.s_series.Add(new Series(alice.rsa.UnblindObject(y.s_series[j], r)));
-                        m.t_series.Add(new Series(alice.rsa.UnblindObject(y.t_series[j], r)));
-                        m.u_hashes.Add(alice.rsa.UnblindObject(y.u_hashes[j], r));
-                        m.w_hashes.Add(alice.rsa.UnblindObject(y.w_hashes[j], r));
+                        m.s_series.Add(new Series(alice.rsa.UnblindObject(alice.rsa.GetPubKey(), y.s_series[j].ToByteArray(), r)));
+                        m.t_series.Add(new Series(alice.rsa.UnblindObject(alice.rsa.GetPubKey(), y.t_series[j].ToByteArray(), r)));
+                        m.u_hashes.Add(alice.rsa.UnblindObject(alice.rsa.GetPubKey(), y.u_hashes[j].ToByteArray(), r));
+                        m.w_hashes.Add(alice.rsa.UnblindObject(alice.rsa.GetPubKey(), y.w_hashes[j].ToByteArray(), r));
                     }
 
                     revealed_banknotes.Add(m);
@@ -131,7 +131,7 @@ namespace CyfroweBanknoty.AliceProgram
 
             //rsa.CheckEquality(m, r, y);
 
-            //Console.ReadKey();
+            Console.ReadKey();
 
             //byte[] res = rsa.UnblindObject(y, r);
 

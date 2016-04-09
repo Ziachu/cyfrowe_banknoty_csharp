@@ -225,8 +225,8 @@ namespace CyfroweBanknoty.Users
                     var y = hidden_banknotes[i];
                     var m = new Banknote();
 
-                    m.amount = BitConverter.ToInt64(rsa.UnblindObject(y.amount, r), 0);
-                    m.id = BitConverter.ToInt64(rsa.UnblindObject(y.id, r), 0);
+                    m.amount = BitConverter.ToInt64(rsa.UnblindObject(rsa.GetPubKey(), y.amount.ToByteArray(), r), 0);
+                    m.id = BitConverter.ToInt64(rsa.UnblindObject(rsa.GetPubKey(), y.id.ToByteArray(), r), 0);
 
                     Console.WriteLine("\t[debug]: Revealing banknote {0}\t\twith secret {1}.", m.id, r);
 
@@ -237,10 +237,10 @@ namespace CyfroweBanknoty.Users
 
                     for (int j = 0; j < y.s_series.Count(); j++)
                     {
-                        m.s_series.Add(new Series(rsa.UnblindObject(y.s_series[j], r)));
-                        m.t_series.Add(new Series(rsa.UnblindObject(y.t_series[j], r)));
-                        m.u_hashes.Add(rsa.UnblindObject(y.u_hashes[j], r));
-                        m.w_hashes.Add(rsa.UnblindObject(y.w_hashes[j], r));
+                        m.s_series.Add(new Series(rsa.UnblindObject(rsa.GetPubKey(), y.s_series[j].ToByteArray(), r)));
+                        m.t_series.Add(new Series(rsa.UnblindObject(rsa.GetPubKey(), y.t_series[j].ToByteArray(), r)));
+                        m.u_hashes.Add(rsa.UnblindObject(rsa.GetPubKey(), y.u_hashes[j].ToByteArray(), r));
+                        m.w_hashes.Add(rsa.UnblindObject(rsa.GetPubKey(), y.w_hashes[j].ToByteArray(), r));
                     }
 
                     revealed_banknotes.Add(m);

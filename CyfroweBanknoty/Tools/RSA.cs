@@ -6,6 +6,9 @@ using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
 using System.Collections.Generic;
+using Org.BouncyCastle.Crypto.Engines;
+using Org.BouncyCastle.Crypto.Signers;
+using Org.BouncyCastle.Crypto.Digests;
 
 namespace CyfroweBanknoty.Tools
 {
@@ -56,6 +59,21 @@ namespace CyfroweBanknoty.Tools
             return rsa.ToXmlString(false);
         }
 
+        public RsaKeyParameters GetPubKey()
+        {
+            //RSAParameters kke = rsa.ExportParameters(false);
+            //BigInteger mod = new BigInteger(kke.Modulus);
+            //BigInteger exp = new BigInteger(kke.Exponent);
+            RsaKeyParameters key = new RsaKeyParameters(false, n, e);
+            return key;
+        }
+
+        public RsaKeyParameters GetPrivKey()
+        {
+            RsaKeyParameters key = new RsaKeyParameters(true, n, d);
+            return key;
+        }
+
         //metoda zwracająca klucz prywatny
         public string GetPrivateKey()
         {
@@ -104,59 +122,96 @@ namespace CyfroweBanknoty.Tools
         }
 
         // --- m => b
-        public BigInteger BlindObject(byte[] message, BigInteger r)
+        public BigInteger BlindOb(RsaKeyParameters key, byte[] message, BigInteger r)
         {
             BigInteger m = new BigInteger(message);
             //BigInteger b = (r.ModPow(e, n).Multiply(m)).Mod(n);
-            BigInteger b = ((r.ModPow(e, n)).Multiply(m)).Mod(n);
-
+            BigInteger z = ((r.ModPow(e, n).Mod(n)).Multiply(m));
+            BigInteger b = z.Mod(n);
             //Console.WriteLine("m: {0}\nr: {1}\ne: {2}\nn: {3}\nb: {4}", m, r, e, n, b);
             return b;
         }
 
+        public BigInteger BlindObject(RsaKeyParameters key, byte[] msg,  BigInteger factor)
+        {
+            RsaBlindingEngine eng = new RsaBlindingEngine();
+
+
+
+            RsaBlindingParameters param = new RsaBlindingParameters(key, factor);
+            PssSigner blindSigner = new PssSigner(eng, new Sha1Digest(), 15);
+            blindSigner.Init(true, param);
+
+            blindSigner.BlockUpdate(msg, 0, msg.Length);
+
+            byte[] blinded = null;
+            try
+            {
+                blinded = blindSigner.GenerateSignature();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(" ");
+            }
+            BigInteger blinded_int = new BigInteger(blinded);
+            return blinded_int;
+        }
+
         // --- b => m
-        public byte[] UnblindObject(BigInteger y, BigInteger r)
+        public byte[] UnblindOb(BigInteger y, BigInteger r)
         {
             //BigInteger m = (r.ModPow(e.ModInverse(n), n).Multiply(y)).Mod(n);
             //BigInteger m = (y.Multiply(r.ModPow(e, n))).Mod(n);
 
-            BigInteger m = (y.Multiply(r.ModPow(e.Negate(), n))).Mod(n);
+            BigInteger ee = e.Negate();
+
+            BigInteger m = (y.Multiply(r.ModPow(ee, n).Mod(n))).Mod(n);
             //BigInteger m = ((r.ModPow(e.ModInverse(n), n)).Multiply(y)).Mod(n);
 
             //Console.WriteLine("m: {0}\nr: {1}\ne: {2}\nn: {3}\ny: {4}", m, r, e, n, y);
             return m.ToByteArray();
         }
 
-        public void CheckEquality(BigInteger m, BigInteger r, BigInteger y)
+        public byte[] UnblindObject(RsaKeyParameters key, byte[] msg, BigInteger factor)
         {
-            //r = new BigInteger("2");
-            //n = new BigInteger("3");
+            RsaBlindingEngine eng = new RsaBlindingEngine();
 
-            //Console.WriteLine("\n\nr: " + r);
-            //var one = new BigInteger("1");
-            //Console.WriteLine("\n\none: " + one);
-            //Console.WriteLine("\n\nr^{-1}: " + one.Divide(r));
-            //Console.WriteLine("\n\nr * r^{-1}: " + r.Multiply(one.Divide(r)));
-            //Console.WriteLine("\n\n2 * 2 % 3: " + r.Multiply(r).Mod(n));
-            //Console.WriteLine("\n\n2 ^ 3 % 3: " + r.ModPow(n, n));
-            //Console.WriteLine("\n\nr / r: " + r.Divide(r));
-            //Console.WriteLine("\n\nr / r: " + r.Divide(r));
-            byte[] blind = BlindObject(m.ToByteArray(), r).ToByteArray();
-            byte[] unblind = UnblindObject(BlindObject(m.ToByteArray(), r), r);
-            byte[] m_byte = m.ToByteArray();
-            
-            for(int i =0; i< m_byte.Length; i++)
-            {
-                if (m_byte[i] == unblind[i])
-                {
-                    Console.WriteLine("jupiii");
-                }
-                else
-                {
-                    Console.WriteLine("not equal");
-                }
-            }
+            RsaBlindingParameters param = new RsaBlindingParameters(key, factor);
+            eng.Init(false, param);
+
+            return eng.ProcessBlock(msg, 0, msg.Length);
         }
+
+        //public void CheckEquality(BigInteger m, BigInteger r, BigInteger y)
+        //{
+        //    //r = new BigInteger("2");
+        //    //n = new BigInteger("3");
+
+        //    //Console.WriteLine("\n\nr: " + r);
+        //    //var one = new BigInteger("1");
+        //    //Console.WriteLine("\n\none: " + one);
+        //    //Console.WriteLine("\n\nr^{-1}: " + one.Divide(r));
+        //    //Console.WriteLine("\n\nr * r^{-1}: " + r.Multiply(one.Divide(r)));
+        //    //Console.WriteLine("\n\n2 * 2 % 3: " + r.Multiply(r).Mod(n));
+        //    //Console.WriteLine("\n\n2 ^ 3 % 3: " + r.ModPow(n, n));
+        //    //Console.WriteLine("\n\nr / r: " + r.Divide(r));
+        //    //Console.WriteLine("\n\nr / r: " + r.Divide(r));
+        //    byte[] blind = BlindObject(m.ToByteArray(), r).ToByteArray();
+        //    byte[] unblind = UnblindObject(BlindObject(m.ToByteArray(), r), r);
+        //    byte[] m_byte = m.ToByteArray();
+
+        //    for(int i =0; i< m_byte.Length; i++)
+        //    {
+        //        if (m_byte[i] == unblind[i])
+        //        {
+        //            Console.WriteLine("jupiii");
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("not equal");
+        //        }
+        //    }
+        //}
 
         // --- b => bs
         public BigInteger SignObject(BigInteger m)
