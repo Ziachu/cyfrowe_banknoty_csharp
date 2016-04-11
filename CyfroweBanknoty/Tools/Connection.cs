@@ -20,7 +20,7 @@ namespace CyfroweBanknoty.Tools
                 Console.WriteLine("ip: " + addr);
             Console.WriteLine("------------------\n");
 
-            IPAddress ipAddress = ipHostInfo.AddressList[2];
+            IPAddress ipAddress = ipHostInfo.AddressList[4];
             ipEndPoint = new IPEndPoint(ipAddress, 4445);
             Console.WriteLine(ipEndPoint);
 

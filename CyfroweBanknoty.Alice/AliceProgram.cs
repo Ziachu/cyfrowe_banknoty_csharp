@@ -79,7 +79,6 @@ namespace CyfroweBanknoty.AliceProgram
             Console.WriteLine("[info]: Sending to Bank elements required to reveal banknotes...");
             alice.RevealBanknotes();
 
-            Console.ReadLine();
 
             //RSA rsa = new RSA(true);
             //BigInteger r = rsa.DrawR();
@@ -103,7 +102,7 @@ namespace CyfroweBanknoty.AliceProgram
             //Console.WriteLine("msg: " + msg2);
 
             //Console.WriteLine("equal? : " + msg1.Equals(msg2));
-
+            Console.WriteLine(alice.s_series.Count());
         }
     }
 }

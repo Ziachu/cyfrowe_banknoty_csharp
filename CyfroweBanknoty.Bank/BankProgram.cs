@@ -52,6 +52,9 @@ namespace CyfroweBanknoty.BankProgram
             bank.RevealHiddenBanknotes();
             Console.WriteLine("[info]: {0} banknotes revealed.", bank.revealed_banknotes.Count() - 1);
 
+            Console.WriteLine("[infp]: Bank verifies banknotes (id & amounts).");
+            bank.checkBanknotes();
+
             // --- step 6. Bank verifies banknotes
             // --- --- visualizing revealed banknotes
             //Console.WriteLine("[info]: Revealed banknotes:");
@@ -66,8 +69,7 @@ namespace CyfroweBanknoty.BankProgram
             //        continue;
             //    }
             //}
-
-            Console.ReadLine();
+           
         }
     }
 }

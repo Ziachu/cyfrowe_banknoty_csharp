@@ -255,54 +255,90 @@ namespace CyfroweBanknoty.Users
 
         public void checkBanknotes()
         {
-            //
-            Console.WriteLine("I'm waiting for 99 banknotes");
-            List<Banknote> banknotes = new List<Banknote>();
-            List<Series> s_series;
-            List<Series> b_series;
-            List<Series> l_series;
-
-            List<Series> t_series;
-            List<Series> c_series;
-            List<Series> r_series;
-
-            //Sprawdzamy czy kwota sie zgadza na kazdym banknocie
-            if (banknotes.Count == 99)
+            // sprawdzanie kwot
+            foreach (Banknote banknoteX in revealed_banknotes)
             {
-                for (int i = 0; i < 99; i++)
+                foreach (Banknote banknoteY in revealed_banknotes)
                 {
-                    for (int j = 0; j < 99; j++)
+                    if (banknoteX != null && banknoteY != null)
                     {
-                        if (banknotes[i].amount == banknotes[j].amount) { }
-                        else
+                        if (banknoteX.amount != banknoteY.amount)
                         {
-                            Console.WriteLine("Kwoty sie nie zgadzaja, Alice dopuscila sie proby oszustwa.");
+                            Console.WriteLine("\t[debug] {0} <--> {1}, kwoty sie nie zgadzaja, Alice dopuscila sie proby oszustwa.",
+                                banknoteX.id, banknoteY.id);
                             break;
                         }
-                    }
-                }
-
-                //Sprawdzamy czy kazdy banknot ma różne identyfikatory
-                if (banknotes.Count == 99)
-                {
-                    for (int i = 0; i < 99; i++)
-                    {
-                        for (int j = 0; j < 99; j++)
+                        else
                         {
-                            if (banknotes[i].id == banknotes[j].id)
-                            {
-
-                                Console.WriteLine("Identyfikatory sie pokrywaja, Alice dopuscila sie proby oszustwa.");
-                                break;
-                            }
-                            else { continue; }
+                            Console.WriteLine("\t[debug] {0}, kwoty są ok.", banknoteX.id);
                         }
                     }
                 }
-                //Weryfikujemy zobowiazania bitowe
-                if (banknotes.Count == 99)
-                {
+            }
 
+            // sprawdzanie id
+            foreach (Banknote banknoteX in revealed_banknotes)
+            {
+                foreach (Banknote banknoteY in revealed_banknotes)
+                {
+                    if (banknoteX != null && banknoteY != null)
+                    {
+                        if (banknoteX.id == banknoteY.id)
+                        {
+                            Console.WriteLine("\t[debug] {0} <--> {1}, id są takie same, Alice dopuscila sie proby oszustwa.",
+                                banknoteX.id, banknoteY.id);
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("\t[debug] {0}, id są ok.", banknoteX.id);
+                        }
+                    }
+                }
+            }
+
+            // sprawdzanie hash'y
+            var sha1 = new SHA1CryptoServiceProvider();
+            int no_series = s_series.Count();
+            u_hashes = new List<byte[]>();
+            w_hashes = new List<byte[]>();
+
+            // najpierw obliczamy hash'e z otrzymanych odkrytych danych
+            for (int x = 0; x < no_series; x++)
+            {
+                byte[] data = Helper.CombineByteArrays(s_series[x].values, b_series[x].values);
+                data = Helper.CombineByteArrays(data, l_secret[x].values);
+                var u_hash = sha1.ComputeHash(data);
+
+                data = Helper.CombineByteArrays(t_series[x].values, c_series[x].values);
+                data = Helper.CombineByteArrays(data, r_secret[x].values);
+                var w_hash = sha1.ComputeHash(data);
+
+                u_hashes.Add(u_hash);
+                w_hashes.Add(w_hash);
+            }
+
+            // następnie porównujemy je do tych, które dostaliśmy w banknotach
+            foreach (Banknote banknote in revealed_banknotes)
+            {
+                Console.WriteLine("Liczba ciągów w banknocie: {0}\nLiczba ciągów: {1}\nDługość tablicy hash'y: {2}", 
+                    banknote.u_hashes.Count(),
+                    no_series,
+                    u_hashes.Count());
+
+                if (banknote != null)
+                {
+                    for (int x = 0; x < no_series; x++)
+                    {
+                        if (banknote.u_hashes[x] != u_hashes[x])
+                        {
+                            Console.WriteLine("\t[debug] {0}, hashes different...", banknote.id);
+                        }
+                        else
+                        {
+                            Console.WriteLine("\t[debug] {0}, hashes OK!", banknote.id);
+                        }
+                    }
                 }
             }
         }
